@@ -1,0 +1,159 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  ADMIN
+  SUPERVISOR
+  OPERATOR
+  VIEWER
+}
+
+enum DeviceStatus {
+  ONLINE
+  OFFLINE
+  LOW_BATTERY
+  WARNING
+}
+
+enum AlertType {
+  GEOFENCE_EXIT
+  GEOFENCE_ENTER
+  LOW_BATTERY
+  SIGNAL_LOST
+  SOS
+}
+
+enum AlertSeverity {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      UserRole @default(VIEWER)
+  status    String   @default("active")
+  lastLogin DateTime? @map("last_login")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  assignedDevices DeviceAssignment[]
+  auditLogs       AuditLog[]
+
+  @@map("users")
+}
+
+model Device {
+  id               Int          @id @default(autoincrement())
+  deviceIdentifier String       @unique @map("device_identifier")
+  name             String
+  groupName        String       @map("group_name")
+  model            String?
+  imei             String?
+  status           DeviceStatus @default(OFFLINE)
+  battery          Int          @default(100)
+  signal           Int          @default(0)
+  lastSeen         DateTime?    @map("last_seen")
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+
+  locations   Location[]
+  alerts      Alert[]
+  assignments DeviceAssignment[]
+
+  @@map("devices")
+}
+
+model Location {
+  id        Int      @id @default(autoincrement())
+  deviceId  Int      @map("device_id")
+  latitude  Float
+  longitude Float
+  speed     Float?   @default(0)
+  altitude  Float?
+  heading   Float?
+  timestamp DateTime @default(now())
+
+  device Device @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+
+  @@index([deviceId, timestamp])
+  @@index([timestamp])
+  @@map("locations")
+}
+
+model Alert {
+  id             Int           @id @default(autoincrement())
+  type           AlertType
+  severity       AlertSeverity
+  deviceId       Int           @map("device_id")
+  message        String
+  acknowledged   Boolean       @default(false)
+  acknowledgedBy Int?          @map("acknowledged_by")
+  acknowledgedAt DateTime?     @map("acknowledged_at")
+  createdAt      DateTime      @default(now()) @map("created_at")
+
+  device Device @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+
+  @@index([acknowledged, createdAt])
+  @@index([deviceId])
+  @@map("alerts")
+}
+
+model GeofenceZone {
+  id           Int      @id @default(autoincrement())
+  name         String
+  type         String   @default("polygon")
+  color        String   @default("#3B82F6")
+  active       Boolean  @default(true)
+  alertOnEnter Boolean  @default(true) @map("alert_on_enter")
+  alertOnExit  Boolean  @default(true) @map("alert_on_exit")
+  coordinates  Json
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("geofence_zones")
+}
+
+model DeviceAssignment {
+  id       Int @id @default(autoincrement())
+  userId   Int @map("user_id")
+  deviceId Int @map("device_id")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  device Device @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, deviceId])
+  @@map("device_assignments")
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  action    String
+  resource  String
+  details   Json?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, createdAt])
+  @@map("audit_logs")
+}
+
+model Setting {
+  id    Int    @id @default(autoincrement())
+  key   String @unique
+  value Json
+
+  @@map("settings")
+}
