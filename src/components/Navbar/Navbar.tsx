@@ -1,4 +1,3 @@
-import React from 'react';
 import { Bell, Moon, Sun, Search, Wifi, WifiOff } from 'lucide-react';
 import { useSocket } from '../../context/SocketContext';
 interface NavbarProps {

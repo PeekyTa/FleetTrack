@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { authApi } from '../services/api';
 import type { AuthUser, UserRole } from '../types/index';
 import { ROLE_PERMISSIONS as PERMISSIONS } from '../types/index';

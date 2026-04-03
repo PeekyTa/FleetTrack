@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router';
 import { Sidebar } from '../../components/Sidebar/Sidebar';
 import { Navbar } from '../../components/Navbar/Navbar';
