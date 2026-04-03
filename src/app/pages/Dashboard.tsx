@@ -69,16 +69,16 @@ export function Dashboard() {
     { label: 'Alertes Actives', value: unacknowledgedCount, icon: AlertTriangle, color: '#EF4444', bg: '#FEF2F2' },
   ];
   return (
-    <div className="p-6 space-y-6 animate-fade-in-up flex flex-col">
+    <div className="p-4 md:p-6 space-y-4 md:space-y-6 animate-fade-in-up flex flex-col">
       {}
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {statCards.map((s) => (
           <StatCard key={s.label} {...s} />
         ))}
       </div>
       {}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        <div className="xl:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+        <div className="lg:col-span-2">
           <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden" style={{ height: 480 }}>
             {locLoading ? (
               <div className="h-full flex items-center justify-center text-slate-400">Chargement de la carte...</div>

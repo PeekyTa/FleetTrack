@@ -1,4 +1,4 @@
-import { Bell, Moon, Sun, Search, Wifi, WifiOff } from 'lucide-react';
+import { Bell, Moon, Sun, Search, Wifi, WifiOff, Menu } from 'lucide-react';
 import { useSocket } from '../../context/SocketContext';
 interface NavbarProps {
   currentTitle: string;
@@ -7,22 +7,26 @@ interface NavbarProps {
   unacknowledgedAlerts: number;
   userName?: string;
   userRole?: string;
+  toggleMobileMenu: () => void;
 }
-export function Navbar({ currentTitle, darkMode, setDarkMode, unacknowledgedAlerts, userName, userRole }: NavbarProps) {
+export function Navbar({ currentTitle, darkMode, setDarkMode, unacknowledgedAlerts, userName, userRole, toggleMobileMenu }: NavbarProps) {
   const { connected } = useSocket();
   return (
-    <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shrink-0">
-      <div>
-        <h1 className="text-slate-800 font-semibold" style={{ fontSize: 18 }}>{currentTitle}</h1>
-      </div>
+    <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-6 shrink-0 w-full">
       <div className="flex items-center gap-3">
+        <button className="md:hidden p-2 text-slate-500 hover:bg-slate-50 rounded-lg -ml-2" onClick={toggleMobileMenu}>
+          <Menu size={20} />
+        </button>
+        <h1 className="text-slate-800 font-semibold truncate max-w-[120px] sm:max-w-none" style={{ fontSize: 18 }}>{currentTitle}</h1>
+      </div>
+      <div className="flex items-center gap-2 md:gap-3">
         {}
-        <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full ${connected ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-500'}`} style={{ fontSize: 11 }}>
+        <div className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full ${connected ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-500'}`} style={{ fontSize: 11 }}>
           {connected ? <Wifi size={12} /> : <WifiOff size={12} />}
           {connected ? 'Connecté' : 'Hors ligne'}
         </div>
         {}
-        <div className="relative">
+        <div className="relative hidden md:block">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"

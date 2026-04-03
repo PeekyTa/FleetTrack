@@ -38,12 +38,18 @@ export function LiveMap() {
   }), [deviceLocations]);
   const selectedDevice = filtered.find((d) => d.deviceId === selectedDeviceId);
   return (
-    <div className="flex h-full overflow-hidden">
+    <div className="flex h-full overflow-hidden relative">
       {}
       {showPanel && (
-        <div className="w-80 bg-white border-r border-slate-200 flex flex-col shrink-0">
+        <div className="absolute inset-y-0 left-0 z-[1001] w-full sm:w-80 sm:relative sm:z-10 bg-white border-r border-slate-200 flex flex-col shrink-0 shadow-2xl sm:shadow-none">
           {}
-          <div className="grid grid-cols-4 gap-1 p-3 border-b border-slate-100">
+          <div className="grid grid-cols-4 gap-1 p-3 border-b border-slate-100 relative">
+            <button 
+              onClick={() => setShowPanel(false)} 
+              className="sm:hidden absolute top-2 right-2 p-1.5 bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-lg"
+            >
+              Fermer
+            </button>
             {[
               { value: counts.online, color: '#10B981', icon: Wifi },
               { value: counts.offline, color: '#94A3B8', icon: WifiOff },
