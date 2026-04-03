@@ -1,14 +1,12 @@
 import React from 'react';
 import { Trash2 } from 'lucide-react';
 import { Device } from '../../app/data/mockData';
-
 interface DeleteDeviceModalProps {
   deviceList: Device[];
   deleteId: string;
   setDeleteId: (id: string | null) => void;
   handleDelete: (id: string) => void;
 }
-
 export function DeleteDeviceModal({ deviceList, deleteId, setDeleteId, handleDelete }: DeleteDeviceModalProps) {
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">

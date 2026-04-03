@@ -1,19 +1,16 @@
-import React, { useState, useMemo } from 'react';
-import { Bell, Shield, Check, CheckCheck, Filter, MapPin, BatteryLow, WifiOff, AlertTriangle } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Bell, Shield, Check, CheckCheck, MapPin, BatteryLow, WifiOff, AlertTriangle } from 'lucide-react';
 import { LeafletMap } from '../../components/Map/LeafletMap';
 import { useAlerts } from '../../hooks/useAlerts';
 import { useGeofences } from '../../hooks/useGeofences';
 import { useLocations } from '../../hooks/useLocations';
 import { useAuth } from '../../context/AuthContext';
-import type { Alert, GeofenceZone } from '../../types/index';
-
 const SEVERITY_CONFIG: Record<string, { color: string; bg: string; label: string }> = {
   CRITICAL: { color: '#DC2626', bg: '#FEF2F2', label: 'Critique' },
   HIGH: { color: '#EA580C', bg: '#FFF7ED', label: 'Élevée' },
   MEDIUM: { color: '#D97706', bg: '#FFFBEB', label: 'Moyenne' },
   LOW: { color: '#059669', bg: '#F0FDF4', label: 'Faible' },
 };
-
 const TYPE_ICONS: Record<string, any> = {
   GEOFENCE_EXIT: MapPin,
   GEOFENCE_ENTER: MapPin,
@@ -21,7 +18,6 @@ const TYPE_ICONS: Record<string, any> = {
   SIGNAL_LOST: WifiOff,
   SOS: AlertTriangle,
 };
-
 const TYPE_LABELS: Record<string, string> = {
   GEOFENCE_EXIT: 'Sortie de zone',
   GEOFENCE_ENTER: 'Entrée de zone',
@@ -29,16 +25,14 @@ const TYPE_LABELS: Record<string, string> = {
   SIGNAL_LOST: 'Signal perdu',
   SOS: 'SOS',
 };
-
 export function AlertsGeofencing() {
   const { alerts, loading, acknowledgeAlert, acknowledgeAll, unacknowledgedCount } = useAlerts();
-  const { zones, loading: zonesLoading, toggleZone, deleteZone } = useGeofences();
+  const { zones, loading: zonesLoading, toggleZone} = useGeofences();
   const { deviceLocations } = useLocations();
   const { hasPermission } = useAuth();
   const [tab, setTab] = useState<'alerts' | 'zones'>('alerts');
   const [filterSeverity, setFilterSeverity] = useState('all');
   const [filterAck, setFilterAck] = useState('all');
-
   const filteredAlerts = useMemo(() => {
     return alerts.filter((a) => {
       const sevMatch = filterSeverity === 'all' || a.severity === filterSeverity;
@@ -48,12 +42,11 @@ export function AlertsGeofencing() {
       return sevMatch && ackMatch;
     });
   }, [alerts, filterSeverity, filterAck]);
-
   return (
     <div className="flex h-full overflow-hidden">
-      {/* Left panel */}
+      {}
       <div className="w-80 bg-white border-r border-slate-200 flex flex-col shrink-0">
-        {/* Tab switcher */}
+        {}
         <div className="flex border-b border-slate-200">
           <button
             onClick={() => setTab('alerts')}
@@ -83,10 +76,9 @@ export function AlertsGeofencing() {
             </button>
           )}
         </div>
-
         {tab === 'alerts' ? (
           <>
-            {/* Alert filters + acknowledge all */}
+            {}
             <div className="p-3 border-b border-slate-100 space-y-2">
               <div className="flex gap-1 flex-wrap">
                 {['all', 'CRITICAL', 'HIGH', 'MEDIUM', 'LOW'].map((s) => (
@@ -126,8 +118,7 @@ export function AlertsGeofencing() {
                 </button>
               )}
             </div>
-
-            {/* Alert list */}
+            {}
             <div className="flex-1 overflow-y-auto">
               {loading ? (
                 <div className="p-8 text-center text-slate-400" style={{ fontSize: 13 }}>Chargement...</div>
@@ -208,8 +199,7 @@ export function AlertsGeofencing() {
           </div>
         )}
       </div>
-
-      {/* Map */}
+      {}
       <div className="flex-1">
         <LeafletMap
           deviceLocations={deviceLocations}

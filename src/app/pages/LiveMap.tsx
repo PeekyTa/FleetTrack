@@ -5,7 +5,6 @@ import { useLocations } from '../../hooks/useLocations';
 import { useGeofences } from '../../hooks/useGeofences';
 import { useAuth } from '../../context/AuthContext';
 import type { DeviceLocation } from '../../types/index';
-
 const STATUS_FILTERS = [
   { value: 'all', label: 'Tous' },
   { value: 'ONLINE', label: 'En ligne' },
@@ -13,7 +12,6 @@ const STATUS_FILTERS = [
   { value: 'LOW_BATTERY', label: 'Batterie faible' },
   { value: 'WARNING', label: 'Alerte' },
 ];
-
 export function LiveMap() {
   const { deviceLocations, loading } = useLocations();
   const { zones } = useGeofences();
@@ -22,7 +20,6 @@ export function LiveMap() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [showPanel, setShowPanel] = useState(true);
-
   const filtered = useMemo(() => {
     return deviceLocations.filter((dl) => {
       const statusMatch = filterStatus === 'all' || dl.status === filterStatus;
@@ -32,7 +29,6 @@ export function LiveMap() {
       return statusMatch && searchMatch;
     });
   }, [deviceLocations, filterStatus, searchQuery]);
-
   const counts = useMemo(() => ({
     total: deviceLocations.length,
     online: deviceLocations.filter((d) => d.status === 'ONLINE').length,
@@ -40,15 +36,13 @@ export function LiveMap() {
     lowBattery: deviceLocations.filter((d) => d.status === 'LOW_BATTERY').length,
     warning: deviceLocations.filter((d) => d.status === 'WARNING').length,
   }), [deviceLocations]);
-
   const selectedDevice = filtered.find((d) => d.deviceId === selectedDeviceId);
-
   return (
     <div className="flex h-full overflow-hidden">
-      {/* Left Panel */}
+      {}
       {showPanel && (
         <div className="w-80 bg-white border-r border-slate-200 flex flex-col shrink-0">
-          {/* Stats */}
+          {}
           <div className="grid grid-cols-4 gap-1 p-3 border-b border-slate-100">
             {[
               { value: counts.online, color: '#10B981', icon: Wifi },
@@ -62,8 +56,7 @@ export function LiveMap() {
               </div>
             ))}
           </div>
-
-          {/* Search */}
+          {}
           <div className="p-3 border-b border-slate-100">
             <div className="relative">
               <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -91,8 +84,7 @@ export function LiveMap() {
               ))}
             </div>
           </div>
-
-          {/* Device list */}
+          {}
           <div className="flex-1 overflow-y-auto">
             {filtered.map((dl) => (
               <button
@@ -127,8 +119,7 @@ export function LiveMap() {
           </div>
         </div>
       )}
-
-      {/* Map */}
+      {}
       <div className="flex-1 relative">
         <button
           onClick={() => setShowPanel(!showPanel)}
@@ -137,7 +128,6 @@ export function LiveMap() {
         >
           <Filter size={14} />
         </button>
-
         {loading ? (
           <div className="h-full flex items-center justify-center bg-slate-100">
             <span className="text-slate-400">Chargement de la carte...</span>

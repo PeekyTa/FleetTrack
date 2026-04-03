@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { groups, Device } from '../../app/data/mockData';
-
 interface DeviceModalProps {
   device?: Device | null;
   onClose: () => void;
   onSave: (data: Partial<Device>) => void;
 }
-
 export function DeviceModal({ device, onClose, onSave }: DeviceModalProps) {
   const [form, setForm] = useState({
     name: device?.name || '',
@@ -15,7 +13,6 @@ export function DeviceModal({ device, onClose, onSave }: DeviceModalProps) {
     model: device?.model || 'Motorola SL7550e',
     imei: device?.imei || '',
   });
-
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md animate-fade-in-up">

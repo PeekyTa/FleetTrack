@@ -1,29 +1,24 @@
 import { Response } from 'express';
 import { alertService } from '../services/alertService.js';
 import { AuthenticatedRequest } from '../middleware/authMiddleware.js';
-
 export const alertController = {
   async getAll(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const userRole = req.user?.role;
       let alerts;
-
       if (userRole === 'ADMIN' || userRole === 'SUPERVISOR') {
         alerts = await alertService.findAll({
           acknowledged: req.query.acknowledged === 'true' ? true :
                         req.query.acknowledged === 'false' ? false : undefined,
         });
       } else {
-        // Operator/Viewer only see alerts for their assigned devices
         alerts = await alertService.findForUserDevices(req.user!.id);
       }
-
       res.json(alerts);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
   },
-
   async acknowledge(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const alert = await alertService.acknowledge(parseInt(req.params.id), req.user!.id);
@@ -32,7 +27,6 @@ export const alertController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async acknowledgeAll(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const result = await alertService.acknowledgeAll(req.user!.id);
@@ -41,7 +35,6 @@ export const alertController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async getStats(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const stats = await alertService.getStats();

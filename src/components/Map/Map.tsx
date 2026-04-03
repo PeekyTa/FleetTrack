@@ -2,7 +2,6 @@ import React from 'react';
 import { NavLink } from 'react-router';
 import { ChevronRight } from 'lucide-react';
 import { CityMap } from '../../app/components/CityMap';
-
 export function Map() {
   return (
     <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm h-[400px] flex flex-col">

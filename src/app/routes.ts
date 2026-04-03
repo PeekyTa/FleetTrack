@@ -9,7 +9,6 @@ import { AlertsGeofencing } from './pages/AlertsGeofencing';
 import { Analytics } from './pages/Analytics';
 import { UsersRoles } from './pages/UsersRoles';
 import { Settings } from './pages/Settings';
-
 function requireAuth() {
   const stored = localStorage.getItem('userInfo');
   if (!stored) return redirect('/login');
@@ -21,7 +20,6 @@ function requireAuth() {
     return redirect('/login');
   }
 }
-
 export const router = createBrowserRouter([
   {
     path: '/login',

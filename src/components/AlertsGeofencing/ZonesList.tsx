@@ -1,9 +1,7 @@
 import React from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import { GeofenceZone, Alert } from '../../app/data/mockData';
-
 const ZONE_COLORS = ['#3B82F6', '#EF4444', '#10B981', '#F59E0B', '#8B5CF6', '#EC4899'];
-
 interface ZonesListProps {
   zones: GeofenceZone[];
   showAddZone: boolean;
@@ -18,7 +16,6 @@ interface ZonesListProps {
   deleteZone: (id: string) => void;
   toggleZone: (id: string) => void;
 }
-
 export function ZonesList({
   zones, showAddZone, setShowAddZone, newZoneName, setNewZoneName,
   newZoneColor, setNewZoneColor, addZone, selectedZoneId, setSelectedZoneId,
@@ -34,7 +31,6 @@ export function ZonesList({
         >
           <Plus size={14} /> Add New Zone
         </button>
-
         {showAddZone && (
           <div className="mt-3 p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-3 animate-fade-in-up">
             <input
@@ -66,7 +62,6 @@ export function ZonesList({
           </div>
         )}
       </div>
-
       <div className="divide-y divide-slate-100">
         {zones.map(zone => (
           <div
@@ -89,7 +84,6 @@ export function ZonesList({
                     </button>
                   </div>
                 </div>
-
                 <div className="flex flex-wrap gap-1.5 mb-2">
                   <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: `${zone.color}15`, color: zone.color }}>
                     {zone.type}
@@ -101,7 +95,6 @@ export function ZonesList({
                     <span className="px-2 py-0.5 rounded bg-orange-50 text-orange-600 text-xs">Exit alert</span>
                   )}
                 </div>
-
                 <div className="flex items-center justify-between">
                   <span className={`text-xs font-medium ${zone.active ? 'text-green-600' : 'text-slate-400'}`}>
                     {zone.active ? '● Active' : '○ Inactive'}

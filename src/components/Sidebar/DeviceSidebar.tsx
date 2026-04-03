@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Search, X, Battery, Signal, ChevronDown } from 'lucide-react';
 import { devices, groups, Device } from '../../app/data/mockData';
-
 const STATUS_COLORS: Record<string, string> = {
   online: '#10B981',
   offline: '#94A3B8',
   'low-battery': '#F59E0B',
   warning: '#F97316',
 };
-
 interface DeviceSidebarProps {
   showFilterPanel: boolean;
   setShowFilterPanel: (show: boolean) => void;
@@ -26,17 +24,15 @@ interface DeviceSidebarProps {
   warnings: number;
   filteredDevices: Device[];
 }
-
 export function DeviceSidebar({
   showFilterPanel, setShowFilterPanel, filterGroup, setFilterGroup,
   searchQuery, setSearchQuery, filterStatus, setFilterStatus,
   selectedDevice, setSelectedDevice, online, offline, lowBattery, warnings, filteredDevices
 }: DeviceSidebarProps) {
   if (!showFilterPanel) return null;
-
   return (
     <div className="w-72 bg-white border-r border-slate-200 flex flex-col shrink-0">
-      {/* Header */}
+      {}
       <div className="p-4 border-b border-slate-100">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-slate-800 font-semibold" style={{ fontSize: 14 }}>Fleet Devices</h3>
@@ -44,7 +40,7 @@ export function DeviceSidebar({
             <X size={16} />
           </button>
         </div>
-        {/* Search */}
+        {}
         <div className="relative mb-3">
           <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
@@ -56,7 +52,7 @@ export function DeviceSidebar({
             style={{ fontSize: 13 }}
           />
         </div>
-        {/* Group filter */}
+        {}
         <div className="relative">
           <select
             value={filterGroup}
@@ -69,8 +65,7 @@ export function DeviceSidebar({
           <ChevronDown size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
         </div>
       </div>
-
-      {/* Status filter tabs */}
+      {}
       <div className="px-4 py-2 border-b border-slate-100 flex gap-1">
         {[
           { key: 'all', label: 'All', count: devices.length },
@@ -90,8 +85,7 @@ export function DeviceSidebar({
           </button>
         ))}
       </div>
-
-      {/* Device list */}
+      {}
       <div className="flex-1 overflow-y-auto p-2 space-y-1.5">
         {filteredDevices.map(device => (
           <button
@@ -128,8 +122,7 @@ export function DeviceSidebar({
           <div className="text-center py-8 text-slate-400" style={{ fontSize: 13 }}>No devices match filters</div>
         )}
       </div>
-
-      {/* Stats bar */}
+      {}
       <div className="border-t border-slate-100 p-3 grid grid-cols-2 gap-2">
         {[
           { label: 'Online', count: online, color: '#10B981' },

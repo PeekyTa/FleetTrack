@@ -1,7 +1,5 @@
-// ===== User & Auth Types =====
 export type UserRole = 'ADMIN' | 'SUPERVISOR' | 'OPERATOR' | 'VIEWER';
 export type UserStatus = 'active' | 'inactive';
-
 export interface User {
   id: number;
   name: string;
@@ -12,7 +10,6 @@ export interface User {
   createdAt: string;
   _count?: { assignedDevices: number };
 }
-
 export interface AuthUser {
   id: number;
   name: string;
@@ -20,10 +17,7 @@ export interface AuthUser {
   role: UserRole;
   token: string;
 }
-
-// ===== Device Types =====
 export type DeviceStatus = 'ONLINE' | 'OFFLINE' | 'LOW_BATTERY' | 'WARNING';
-
 export interface Device {
   id: number;
   deviceIdentifier: string;
@@ -38,7 +32,6 @@ export interface Device {
   createdAt: string;
   _count?: { locations: number; alerts: number };
 }
-
 export interface DeviceStats {
   total: number;
   online: number;
@@ -47,8 +40,6 @@ export interface DeviceStats {
   warning: number;
   groups: { groupName: string; _count: { id: number } }[];
 }
-
-// ===== Location Types =====
 export interface Location {
   id: number;
   deviceId: number;
@@ -59,7 +50,6 @@ export interface Location {
   heading: number | null;
   timestamp: string;
 }
-
 export interface DeviceLocation {
   deviceId: number;
   deviceName: string;
@@ -70,11 +60,8 @@ export interface DeviceLocation {
   signal: number;
   location: Location;
 }
-
-// ===== Alert Types =====
 export type AlertType = 'GEOFENCE_EXIT' | 'GEOFENCE_ENTER' | 'LOW_BATTERY' | 'SIGNAL_LOST' | 'SOS';
 export type AlertSeverity = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
-
 export interface Alert {
   id: number;
   type: AlertType;
@@ -87,15 +74,12 @@ export interface Alert {
   createdAt: string;
   device: { id: number; name: string; deviceIdentifier: string };
 }
-
-// ===== Geofence Types =====
 export interface GeofenceCoordinates {
   type: 'polygon' | 'circle';
   points?: { lat: number; lng: number }[];
   center?: { lat: number; lng: number };
   radius?: number;
 }
-
 export interface GeofenceZone {
   id: number;
   name: string;
@@ -107,38 +91,30 @@ export interface GeofenceZone {
   coordinates: GeofenceCoordinates;
   createdAt: string;
 }
-
-// ===== Analytics Types =====
 export interface AnalyticsDeviceActivity {
   current: { online: number; offline: number; lowBattery: number; warning: number };
   history: { time: string; hour: string; online: number; offline: number }[];
 }
-
 export interface AnalyticsAlertStats {
   byType: { type: string; count: number }[];
   bySeverity: { severity: string; count: number }[];
   recentAlerts: Alert[];
 }
-
 export interface SignalQuality {
   name: string;
   value: number;
   color: string;
 }
-
 export interface CoverageByGroup {
   group: string;
   total: number;
   online: number;
   coverage: number;
 }
-
 export interface DistanceByDay {
   day: string;
   km: number;
 }
-
-// ===== Role Permissions =====
 export const ROLE_PERMISSIONS: Record<UserRole, {
   viewDashboard: boolean;
   viewMap: boolean;

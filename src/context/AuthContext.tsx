@@ -2,7 +2,6 @@ import React, { createContext, useContext, useState, useEffect, ReactNode, useCa
 import { authApi } from '../services/api';
 import type { AuthUser, UserRole } from '../types/index';
 import { ROLE_PERMISSIONS as PERMISSIONS } from '../types/index';
-
 interface AuthContextType {
   user: AuthUser | null;
   login: (email: string, password: string) => Promise<void>;
@@ -11,23 +10,18 @@ interface AuthContextType {
   isAuthenticated: boolean;
   hasPermission: (permission: keyof typeof PERMISSIONS['ADMIN']) => boolean;
 }
-
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) throw new Error('useAuth must be used within an AuthProvider');
   return context;
 };
-
 interface AuthProviderProps {
   children: ReactNode;
 }
-
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const stored = localStorage.getItem('userInfo');
     if (stored) {
@@ -39,18 +33,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
     setLoading(false);
   }, []);
-
   const login = useCallback(async (email: string, password: string) => {
     const userData = await authApi.login(email, password);
     setUser(userData);
   }, []);
-
   const logout = useCallback(() => {
     authApi.logout();
     setUser(null);
     window.location.href = '/login';
   }, []);
-
   const hasPermission = useCallback(
     (permission: keyof typeof PERMISSIONS['ADMIN']): boolean => {
       if (!user) return false;
@@ -59,7 +50,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     },
     [user]
   );
-
   const value: AuthContextType = {
     user,
     login,
@@ -68,7 +58,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     isAuthenticated: !!user,
     hasPermission,
   };
-
   return (
     <AuthContext.Provider value={value}>
       {!loading && children}

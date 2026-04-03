@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Radio, Eye, EyeOff, Wifi, MapPin, Shield } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-
 export function Login() {
   const [email, setEmail] = useState('admin@fleettrack.io');
   const [password, setPassword] = useState('admin123');
@@ -11,7 +10,6 @@ export function Login() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -25,10 +23,9 @@ export function Login() {
       setLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen flex" style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 40%, #0F2A5C 100%)' }}>
-      {/* Left panel — illustration */}
+      {}
       <div className="hidden lg:flex lg:w-1/2 xl:w-3/5 flex-col items-center justify-center p-12 relative overflow-hidden">
         <svg className="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
           {Array.from({ length: 12 }, (_, i) => (
@@ -58,7 +55,6 @@ export function Login() {
             </g>
           ))}
         </svg>
-
         <div className="relative z-10 max-w-md text-center">
           <div className="w-20 h-20 rounded-2xl mx-auto mb-8 flex items-center justify-center shadow-2xl" style={{ background: 'linear-gradient(135deg, #1E40AF, #3B82F6)' }}>
             <Radio size={36} color="white" />
@@ -69,7 +65,6 @@ export function Login() {
           <p className="text-slate-400" style={{ fontSize: 16, lineHeight: 1.7 }}>
             Surveillez et gérez votre flotte de radios POC sur une plateforme unifiée. Suivez les appareils, gérez les géorepérages et répondez aux alertes instantanément.
           </p>
-
           <div className="mt-10 flex flex-wrap gap-3 justify-center">
             {[
               { icon: MapPin, label: 'Suivi GPS en Direct' },
@@ -83,7 +78,6 @@ export function Login() {
             ))}
           </div>
         </div>
-
         <div className="relative z-10 mt-14 w-full max-w-md grid grid-cols-3 gap-4">
           {[
             { value: '2,400+', label: 'Appareils Suivis' },
@@ -97,8 +91,7 @@ export function Login() {
           ))}
         </div>
       </div>
-
-      {/* Right panel — form */}
+      {}
       <div className="w-full lg:w-1/2 xl:w-2/5 flex items-center justify-center p-8 bg-white">
         <div className="w-full max-w-sm animate-fade-in-up">
           <div className="lg:hidden flex items-center gap-3 mb-8">
@@ -110,19 +103,16 @@ export function Login() {
               <div className="text-blue-600 text-xs font-medium">Plateforme de Gestion POC</div>
             </div>
           </div>
-
           <div className="mb-8">
             <h2 className="text-slate-800 mb-2" style={{ fontWeight: 700, fontSize: 28 }}>Bon retour</h2>
             <p className="text-slate-500" style={{ fontSize: 14 }}>Connectez-vous à votre tableau de bord</p>
           </div>
-
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
               <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600" style={{ fontSize: 14 }}>
                 {error}
               </div>
             )}
-
             <div>
               <label className="block text-slate-700 mb-1.5" style={{ fontSize: 14, fontWeight: 500 }}>
                 Adresse email
@@ -136,7 +126,6 @@ export function Login() {
                 placeholder="vous@organisation.com"
               />
             </div>
-
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="text-slate-700" style={{ fontSize: 14, fontWeight: 500 }}>Mot de passe</label>
@@ -160,12 +149,10 @@ export function Login() {
                 </button>
               </div>
             </div>
-
             <div className="flex items-center gap-2">
               <input type="checkbox" id="remember" defaultChecked className="w-4 h-4 accent-blue-600 rounded" />
               <label htmlFor="remember" className="text-slate-600" style={{ fontSize: 14 }}>Rester connecté</label>
             </div>
-
             <button
               type="submit"
               disabled={loading}
@@ -180,13 +167,11 @@ export function Login() {
               ) : 'Se Connecter'}
             </button>
           </form>
-
           <div className="mt-8 pt-6 border-t border-slate-100 text-center">
             <p className="text-slate-400" style={{ fontSize: 12 }}>
               Identifiants de démonstration pré-remplis • SSO entreprise disponible
             </p>
           </div>
-
           <div className="mt-6 flex items-center justify-center gap-4">
             {['SOC 2 Type II', 'ISO 27001', 'RGPD Conforme'].map(badge => (
               <div key={badge} className="flex items-center gap-1 text-slate-400" style={{ fontSize: 11 }}>

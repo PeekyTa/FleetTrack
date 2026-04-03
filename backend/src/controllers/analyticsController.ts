@@ -1,7 +1,6 @@
 import { Response } from 'express';
 import { analyticsService } from '../services/analyticsService.js';
 import { AuthenticatedRequest } from '../middleware/authMiddleware.js';
-
 export const analyticsController = {
   async getDeviceActivity(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
@@ -12,7 +11,6 @@ export const analyticsController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async getAlertStats(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const stats = await analyticsService.getAlertStats();
@@ -21,7 +19,6 @@ export const analyticsController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async getDistanceStats(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const data = await analyticsService.getDistanceStats();
@@ -30,7 +27,6 @@ export const analyticsController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async getCoverageByGroup(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const data = await analyticsService.getCoverageByGroup();
@@ -39,7 +35,6 @@ export const analyticsController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async getSignalQuality(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const data = await analyticsService.getSignalQuality();
@@ -48,7 +43,6 @@ export const analyticsController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async getDashboard(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const [devices, alerts, distance, coverage, signal] = await Promise.all([

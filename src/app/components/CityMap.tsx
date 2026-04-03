@@ -1,29 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { devices as allDevices, Device, GeofenceZone, historyPath } from '../data/mockData';
-
 const W = 1200;
 const H = 700;
-
 const STATUS_COLORS: Record<string, string> = {
   online: '#10B981',
   offline: '#94A3B8',
   'low-battery': '#F59E0B',
   warning: '#F97316',
 };
-
-// Pre-generate city blocks
 function generateBlocks() {
   const majorH = [0, 140, 280, 420, 560, 700];
   const majorV = [0, 160, 320, 480, 640, 800, 960, 1120, 1280];
   const allH = majorH;
   const allV = majorV;
-
   const blocks: { x: number; y: number; w: number; h: number; shade: number }[] = [];
   const rng = (seed: number) => {
     const x = Math.sin(seed) * 10000;
     return x - Math.floor(x);
   };
-
   let seed = 0;
   for (let r = 0; r < allH.length - 1; r++) {
     for (let c = 0; c < allV.length - 1; c++) {
@@ -32,19 +26,15 @@ function generateBlocks() {
       const cellW = x1 - x0;
       const cellH = y1 - y0;
       const margin = 10;
-
-      // Split cell into 2x2 sub-blocks
       const halfW = Math.floor(cellW / 2);
       const halfH = Math.floor(cellH / 2);
       const gap = 8;
-
       const subCells = [
         { sx: x0 + margin, sy: y0 + margin, sw: halfW - margin - gap / 2, sh: halfH - margin - gap / 2 },
         { sx: x0 + halfW + gap / 2, sy: y0 + margin, sw: cellW - halfW - margin - gap / 2, sh: halfH - margin - gap / 2 },
         { sx: x0 + margin, sy: y0 + halfH + gap / 2, sw: halfW - margin - gap / 2, sh: cellH - halfH - margin - gap / 2 },
         { sx: x0 + halfW + gap / 2, sy: y0 + halfH + gap / 2, sw: cellW - halfW - margin - gap / 2, sh: cellH - halfH - margin - gap / 2 },
       ];
-
       for (const sc of subCells) {
         seed++;
         const shade = Math.floor(rng(seed) * 25);
@@ -56,16 +46,13 @@ function generateBlocks() {
   }
   return blocks;
 }
-
 const cityBlocks = generateBlocks();
-
 function CityBackground() {
   return (
     <g>
-      {/* Base */}
+      {}
       <rect width={W} height={H} fill="#E8EDF4" />
-
-      {/* Building blocks */}
+      {}
       {cityBlocks.map((b, i) => (
         <rect
           key={i}
@@ -75,20 +62,16 @@ function CityBackground() {
           rx={2}
         />
       ))}
-
-      {/* Parks */}
+      {}
       <rect x={330} y={155} width={140} height={110} fill="#BBE4C4" rx={4} />
       <rect x={340} y={162} width={128} height={98} fill="#A8DAAA" rx={3} />
       <text x={404} y={218} textAnchor="middle" fill="#4B9A5A" fontSize={10} fontFamily="Inter" fontWeight={600}>PARK</text>
-
       <rect x={770} y={445} width={160} height={100} fill="#BBE4C4" rx={4} />
       <rect x={780} y={452} width={148} height={88} fill="#A8DAAA" rx={3} />
       <text x={850} y={500} textAnchor="middle" fill="#4B9A5A" fontSize={10} fontFamily="Inter" fontWeight={600}>PARK</text>
-
       <rect x={70} y={280} width={80} height={130} fill="#BBE4C4" rx={4} />
       <rect x={78} y={287} width={68} height={118} fill="#A8DAAA" rx={3} />
-
-      {/* River */}
+      {}
       <path
         d={`M 0,620 Q 200,600 380,630 Q 560,660 740,640 Q 920,620 1200,650 L 1200,700 L 0,700 Z`}
         fill="#BFDBFE"
@@ -103,28 +86,23 @@ function CityBackground() {
       <text x={600} y={672} textAnchor="middle" fill="#60A5FA" fontSize={11} fontFamily="Inter" fontWeight={500} opacity={0.8}>
         RIVER DISTRICT
       </text>
-
-      {/* Major roads horizontal */}
+      {}
       {[0, 140, 280, 420, 560, 700].map((y, i) => (
         <line key={`mh${i}`} x1={0} y1={y} x2={W} y2={y} stroke="white" strokeWidth={14} />
       ))}
-
-      {/* Major roads vertical */}
+      {}
       {[0, 160, 320, 480, 640, 800, 960, 1120, W].map((x, i) => (
         <line key={`mv${i}`} x1={x} y1={0} x2={x} y2={H} stroke="white" strokeWidth={14} />
       ))}
-
-      {/* Minor roads horizontal */}
+      {}
       {[70, 210, 350, 490, 630].map((y, i) => (
         <line key={`nh${i}`} x1={0} y1={y} x2={W} y2={y} stroke="#F0F4F8" strokeWidth={6} />
       ))}
-
-      {/* Minor roads vertical */}
+      {}
       {[80, 240, 400, 560, 720, 880, 1040, 1200].map((x, i) => (
         <line key={`nv${i}`} x1={x} y1={0} x2={x} y2={H} stroke="#F0F4F8" strokeWidth={6} />
       ))}
-
-      {/* Road labels */}
+      {}
       {[
         { x: 80, y: 136, text: '1st Ave', rot: -90 },
         { x: 240, y: 136, text: 'Broadway', rot: -90 },
@@ -152,8 +130,7 @@ function CityBackground() {
       ].map((lbl, i) => (
         <text key={i} x={lbl.x} y={lbl.y} textAnchor="start" fill="#A0AEC0" fontSize={9} fontFamily="Inter" fontWeight={500}>{lbl.text}</text>
       ))}
-
-      {/* Compass */}
+      {}
       <g transform="translate(1140, 50)">
         <circle r={24} fill="white" opacity={0.9} />
         <circle r={22} fill="white" stroke="#E2E8F0" strokeWidth={1} />
@@ -163,8 +140,7 @@ function CityBackground() {
         <line x1={-2} y1={0} x2={-16} y2={0} stroke="#94A3B8" strokeWidth={2} strokeLinecap="round" />
         <line x1={2} y1={0} x2={16} y2={0} stroke="#94A3B8" strokeWidth={2} strokeLinecap="round" />
       </g>
-
-      {/* Scale bar */}
+      {}
       <g transform="translate(40, 660)">
         <rect x={0} y={0} width={80} height={4} fill="#94A3B8" rx={2} />
         <rect x={0} y={0} width={40} height={4} fill="#64748B" rx={2} />
@@ -175,21 +151,18 @@ function CityBackground() {
     </g>
   );
 }
-
 interface DeviceMarkerProps {
   device: Device;
   selected?: boolean;
   onClick?: (d: Device) => void;
 }
-
 function DeviceMarker({ device, selected, onClick }: DeviceMarkerProps) {
   const color = STATUS_COLORS[device.status];
   const { mapX: x, mapY: y } = device;
   const isActive = device.status === 'online' || device.status === 'low-battery' || device.status === 'warning';
-
   return (
     <g onClick={() => onClick?.(device)} style={{ cursor: 'pointer' }}>
-      {/* Pulse ring for active devices */}
+      {}
       {isActive && (
         <circle
           cx={x} cy={y} r={16}
@@ -201,13 +174,13 @@ function DeviceMarker({ device, selected, onClick }: DeviceMarkerProps) {
           }}
         />
       )}
-      {/* Selection ring */}
+      {}
       {selected && (
         <circle cx={x} cy={y} r={22} fill="none" stroke="#1E40AF" strokeWidth={3} strokeDasharray="4 2" opacity={0.8} />
       )}
-      {/* Marker body */}
+      {}
       <circle cx={x} cy={y} r={10} fill={color} stroke="white" strokeWidth={2.5} />
-      {/* Device ID label */}
+      {}
       <rect x={x + 13} y={y - 12} width={46} height={16} rx={4} fill="white" opacity={0.92} />
       <text x={x + 36} y={y - 1} textAnchor="middle" fill="#0F172A" fontSize={9} fontFamily="Inter" fontWeight={600}>
         {device.id}
@@ -215,9 +188,7 @@ function DeviceMarker({ device, selected, onClick }: DeviceMarkerProps) {
     </g>
   );
 }
-
 type MapMode = 'live' | 'history' | 'geofence';
-
 interface CityMapProps {
   mode?: MapMode;
   selectedDeviceId?: string | null;
@@ -227,7 +198,6 @@ interface CityMapProps {
   historyDeviceId?: string;
   historyProgress?: number;
 }
-
 export function CityMap({
   mode = 'live',
   selectedDeviceId,
@@ -239,17 +209,14 @@ export function CityMap({
 }: CityMapProps) {
   const [zoom, setZoom] = useState(1);
   const [mapType, setMapType] = useState<'map' | 'satellite'>('map');
-
   const filteredDevices = allDevices.filter(d =>
     filterGroup === 'All Groups' || d.group === filterGroup
   );
-
   const progressIndex = Math.max(1, Math.ceil((historyProgress / 100) * historyPath.length));
   const visiblePath = historyPath.slice(0, progressIndex);
-
   return (
     <div className="relative w-full h-full overflow-hidden bg-[#E8EDF4] rounded-xl">
-      {/* Map controls */}
+      {}
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
         <button
           onClick={() => setZoom(z => Math.min(z + 0.2, 2))}
@@ -262,8 +229,7 @@ export function CityMap({
           style={{ fontSize: 18, fontWeight: 700 }}
         >−</button>
       </div>
-
-      {/* Map type toggle */}
+      {}
       <div className="absolute top-3 right-3 z-10 flex bg-white rounded-lg shadow-md border border-slate-200 overflow-hidden">
         {(['map', 'satellite'] as const).map(t => (
           <button
@@ -273,7 +239,6 @@ export function CityMap({
           >{t}</button>
         ))}
       </div>
-
       <svg
         width="100%"
         height="100%"
@@ -299,12 +264,10 @@ export function CityMap({
             </filter>
           )}
         </defs>
-
         <g filter={mapType === 'satellite' ? 'url(#satFilter)' : undefined}>
           <CityBackground />
         </g>
-
-        {/* Geofence zones */}
+        {}
         {mode === 'geofence' && geofenceZones.map(zone => (
           <g key={zone.id} opacity={zone.active ? 1 : 0.4}>
             {zone.type === 'polygon' && zone.points && (
@@ -353,8 +316,7 @@ export function CityMap({
             )}
           </g>
         ))}
-
-        {/* History path */}
+        {}
         {mode === 'history' && visiblePath.length > 1 && (
           <g>
             <polyline
@@ -377,7 +339,7 @@ export function CityMap({
                 )}
               </g>
             ))}
-            {/* Current position */}
+            {}
             <circle cx={visiblePath[visiblePath.length - 1].x} cy={visiblePath[visiblePath.length - 1].y} r={14} fill="#1E40AF" fillOpacity={0.2} />
             <circle cx={visiblePath[visiblePath.length - 1].x} cy={visiblePath[visiblePath.length - 1].y} r={8} fill="#1E40AF" stroke="white" strokeWidth={2.5} />
             <text
@@ -390,8 +352,7 @@ export function CityMap({
             >{visiblePath[visiblePath.length - 1].time}</text>
           </g>
         )}
-
-        {/* Live device markers */}
+        {}
         {mode === 'live' && filteredDevices.map(device => (
           <DeviceMarker
             key={device.id}
@@ -400,8 +361,7 @@ export function CityMap({
             onClick={onDeviceClick}
           />
         ))}
-
-        {/* Geofence markers */}
+        {}
         {mode === 'geofence' && filteredDevices.map(device => (
           <DeviceMarker
             key={device.id}

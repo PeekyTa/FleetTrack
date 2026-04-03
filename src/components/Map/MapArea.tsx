@@ -2,21 +2,18 @@ import React from 'react';
 import { Filter, Radio, Battery, Signal, MapPin, Clock, X } from 'lucide-react';
 import { CityMap } from '../../app/components/CityMap';
 import { Device } from '../../app/data/mockData';
-
 const STATUS_COLORS: Record<string, string> = {
   online: '#10B981',
   offline: '#94A3B8',
   'low-battery': '#F59E0B',
   warning: '#F97316',
 };
-
 const STATUS_LABELS: Record<string, string> = {
   online: 'Online',
   offline: 'Offline',
   'low-battery': 'Low Battery',
   warning: 'Warning',
 };
-
 function StatusBadge({ status }: { status: string }) {
   return (
     <span
@@ -28,7 +25,6 @@ function StatusBadge({ status }: { status: string }) {
     </span>
   );
 }
-
 interface MapAreaProps {
   showFilterPanel: boolean;
   setShowFilterPanel: (show: boolean) => void;
@@ -40,7 +36,6 @@ interface MapAreaProps {
   setSelectedDevice: React.Dispatch<React.SetStateAction<Device | null>>;
   filterGroup: string;
 }
-
 export function MapArea({
   showFilterPanel, setShowFilterPanel, online, offline, lowBattery, warnings,
   selectedDevice, setSelectedDevice, filterGroup
@@ -57,8 +52,7 @@ export function MapArea({
           Devices
         </button>
       )}
-
-      {/* Status summary bar */}
+      {}
       <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 bg-white/95 backdrop-blur-sm rounded-xl shadow-lg border border-slate-200 px-4 py-2.5">
         {[
           { label: 'Online', count: online, color: '#10B981' },
@@ -76,15 +70,13 @@ export function MapArea({
           </React.Fragment>
         ))}
       </div>
-
       <CityMap
         mode="live"
         selectedDeviceId={selectedDevice?.id}
         onDeviceClick={(d: any) => setSelectedDevice((prev: any) => prev?.id === d.id ? null : d)}
         filterGroup={filterGroup}
       />
-
-      {/* Selected device detail card */}
+      {}
       {selectedDevice && (
         <div className="absolute bottom-4 left-4 z-10 bg-white rounded-2xl shadow-xl border border-slate-200 p-4 w-72 animate-fade-in-up">
           <div className="flex items-start justify-between mb-3">
@@ -101,7 +93,6 @@ export function MapArea({
               <X size={16} />
             </button>
           </div>
-
           <div className="grid grid-cols-2 gap-2 mb-3">
             {[
               { icon: Battery, label: 'Battery', value: `${selectedDevice.battery}%`, color: selectedDevice.battery < 20 ? '#EF4444' : '#10B981' },
@@ -118,7 +109,6 @@ export function MapArea({
               </div>
             ))}
           </div>
-
           <div className="flex gap-2">
             <StatusBadge status={selectedDevice.status} />
             <span className="text-slate-400 flex items-center gap-1" style={{ fontSize: 12 }}>

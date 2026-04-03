@@ -1,9 +1,7 @@
 import React from 'react';
-
 interface StatsRowProps {
   stats: { icon: any; label: string; value: string; color: string }[];
 }
-
 export function StatsRow({ stats }: StatsRowProps) {
   return (
     <div className="bg-white border-b border-slate-200 px-6 py-3 grid grid-cols-4 gap-4 shrink-0">

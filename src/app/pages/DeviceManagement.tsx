@@ -4,14 +4,12 @@ import { useDevices } from '../../hooks/useDevices';
 import { useAuth } from '../../context/AuthContext';
 import { RoleGuard } from '../../guards/RoleGuard';
 import type { Device } from '../../types/index';
-
 const STATUS_INFO: Record<string, { color: string; bg: string; label: string }> = {
   ONLINE: { color: '#10B981', bg: '#F0FDF4', label: 'En ligne' },
   OFFLINE: { color: '#94A3B8', bg: '#F8FAFC', label: 'Hors ligne' },
   LOW_BATTERY: { color: '#F59E0B', bg: '#FFFBEB', label: 'Batterie faible' },
   WARNING: { color: '#EF4444', bg: '#FEF2F2', label: 'Alerte' },
 };
-
 export function DeviceManagement() {
   const { devices, loading, createDevice, updateDevice, deleteDevice } = useDevices();
   const { hasPermission } = useAuth();
@@ -20,12 +18,10 @@ export function DeviceManagement() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [editDevice, setEditDevice] = useState<Device | null | undefined>(undefined);
   const [deleteId, setDeleteId] = useState<number | null>(null);
-
   const groups = useMemo(() => {
     const gs = new Set(devices.map((d) => d.groupName));
     return ['all', ...Array.from(gs)];
   }, [devices]);
-
   const filtered = useMemo(() => {
     return devices.filter((d) => {
       const groupMatch = groupFilter === 'all' || d.groupName === groupFilter;
@@ -36,7 +32,6 @@ export function DeviceManagement() {
       return groupMatch && statusMatch && searchMatch;
     });
   }, [devices, groupFilter, statusFilter, search]);
-
   const groupCounts = useMemo(() => {
     return groups.filter((g) => g !== 'all').map((g) => ({
       group: g,
@@ -44,7 +39,6 @@ export function DeviceManagement() {
       online: devices.filter((d) => d.groupName === g && d.status === 'ONLINE').length,
     }));
   }, [devices, groups]);
-
   const handleSave = async (data: Partial<Device>) => {
     try {
       if (editDevice) {
@@ -57,7 +51,6 @@ export function DeviceManagement() {
       console.error('Error saving device:', err);
     }
   };
-
   const handleDelete = async (id: number) => {
     try {
       await deleteDevice(id);
@@ -66,11 +59,10 @@ export function DeviceManagement() {
       console.error('Error deleting device:', err);
     }
   };
-
   return (
     <RoleGuard allowedRoles={['ADMIN', 'SUPERVISOR']}>
       <div className="flex h-full overflow-hidden">
-        {/* Group panel */}
+        {}
         <div className="w-56 bg-white border-r border-slate-200 flex flex-col shrink-0">
           <div className="p-4 border-b border-slate-100">
             <h3 className="text-slate-700 font-semibold" style={{ fontSize: 14 }}>Groupes</h3>
@@ -103,10 +95,9 @@ export function DeviceManagement() {
             ))}
           </div>
         </div>
-
-        {/* Main content */}
+        {}
         <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Toolbar */}
+          {}
           <div className="px-6 py-4 bg-white border-b border-slate-200 flex items-center gap-3">
             <div className="relative flex-1 max-w-sm">
               <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -141,8 +132,7 @@ export function DeviceManagement() {
               </button>
             )}
           </div>
-
-          {/* Table */}
+          {}
           <div className="flex-1 overflow-auto">
             {loading ? (
               <div className="flex items-center justify-center h-48 text-slate-400">Chargement...</div>
@@ -206,8 +196,7 @@ export function DeviceManagement() {
             )}
           </div>
         </div>
-
-        {/* Add/Edit Modal */}
+        {}
         {editDevice !== undefined && (
           <DeviceFormModal
             device={editDevice}
@@ -215,8 +204,7 @@ export function DeviceManagement() {
             onSave={handleSave}
           />
         )}
-
-        {/* Delete confirmation */}
+        {}
         {deleteId !== null && (
           <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-sm animate-fade-in-up">
@@ -242,8 +230,6 @@ export function DeviceManagement() {
     </RoleGuard>
   );
 }
-
-// ===== Device Form Modal (inline for self-contained page) =====
 function DeviceFormModal({ device, onClose, onSave }: {
   device: Device | null;
   onClose: () => void;
@@ -256,7 +242,6 @@ function DeviceFormModal({ device, onClose, onSave }: {
     model: device?.model || '',
     imei: device?.imei || '',
   });
-
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md animate-fade-in-up">

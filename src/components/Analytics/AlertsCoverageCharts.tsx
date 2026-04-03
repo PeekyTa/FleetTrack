@@ -1,13 +1,11 @@
 import React from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { CustomTooltip } from './CustomTooltip';
-
 interface AlertsCoverageChartsProps {
   alertsData: any[];
   coverageData: any[];
   totalAlerts: number;
 }
-
 export function AlertsCoverageCharts({ alertsData, coverageData, totalAlerts }: AlertsCoverageChartsProps) {
   return (
     <div className="grid grid-rows-2 gap-6">
@@ -29,7 +27,6 @@ export function AlertsCoverageCharts({ alertsData, coverageData, totalAlerts }: 
           </BarChart>
         </ResponsiveContainer>
       </div>
-
       <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
         <h3 className="text-slate-800 font-semibold mb-3" style={{ fontSize: 15 }}>Coverage by Group</h3>
         <div className="space-y-2.5">

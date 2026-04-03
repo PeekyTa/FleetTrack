@@ -1,12 +1,10 @@
 import React from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { CustomTooltip } from './CustomTooltip';
-
 interface DistanceTraveledChartProps {
   data: any[];
   totalDistance: number;
 }
-
 export function DistanceTraveledChart({ data, totalDistance }: DistanceTraveledChartProps) {
   return (
     <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">

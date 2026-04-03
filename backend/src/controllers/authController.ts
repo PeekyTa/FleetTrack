@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { authService } from '../services/authService.js';
 import { AuthenticatedRequest } from '../middleware/authMiddleware.js';
-
 export const authController = {
   async login(req: Request, res: Response): Promise<void> {
     try {
@@ -16,7 +15,6 @@ export const authController = {
       res.status(401).json({ message: error.message });
     }
   },
-
   async register(req: Request, res: Response): Promise<void> {
     try {
       const { name, email, password, role } = req.body;
@@ -30,7 +28,6 @@ export const authController = {
       res.status(400).json({ message: error.message });
     }
   },
-
   async getProfile(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       if (!req.user) { res.status(401).json({ message: 'Non autorisé' }); return; }

@@ -1,10 +1,8 @@
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
-
 interface SignalQualityChartProps {
   data: any[];
 }
-
 export function SignalQualityChart({ data }: SignalQualityChartProps) {
   return (
     <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">

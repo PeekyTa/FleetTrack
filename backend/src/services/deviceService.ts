@@ -1,6 +1,5 @@
 import prisma from '../config/prisma.js';
 import { DeviceStatus } from '@prisma/client';
-
 export const deviceService = {
   async findAll() {
     return prisma.device.findMany({
@@ -10,7 +9,6 @@ export const deviceService = {
       },
     });
   },
-
   async findAssignedToUser(userId: number) {
     const assignments = await prisma.deviceAssignment.findMany({
       where: { userId },
@@ -24,7 +22,6 @@ export const deviceService = {
     });
     return assignments.map((a) => a.device);
   },
-
   async findById(id: number) {
     return prisma.device.findUnique({
       where: { id },
@@ -34,7 +31,6 @@ export const deviceService = {
       },
     });
   },
-
   async create(data: {
     name: string;
     deviceIdentifier: string;
@@ -45,7 +41,6 @@ export const deviceService = {
   }) {
     return prisma.device.create({ data });
   },
-
   async update(id: number, data: {
     name?: string;
     groupName?: string;
@@ -56,11 +51,9 @@ export const deviceService = {
   }) {
     return prisma.device.update({ where: { id }, data });
   },
-
   async delete(id: number) {
     return prisma.device.delete({ where: { id } });
   },
-
   async getStats() {
     const [total, online, offline, lowBattery, warning] = await Promise.all([
       prisma.device.count(),
@@ -69,21 +62,17 @@ export const deviceService = {
       prisma.device.count({ where: { status: 'LOW_BATTERY' } }),
       prisma.device.count({ where: { status: 'WARNING' } }),
     ]);
-
     const groups = await prisma.device.groupBy({
       by: ['groupName'],
       _count: { id: true },
     });
-
     return { total, online, offline, lowBattery, warning, groups };
   },
-
   async assignDevice(userId: number, deviceId: number) {
     return prisma.deviceAssignment.create({
       data: { userId, deviceId },
     });
   },
-
   async unassignDevice(userId: number, deviceId: number) {
     return prisma.deviceAssignment.delete({
       where: { userId_deviceId: { userId, deviceId } },

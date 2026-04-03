@@ -1,8 +1,6 @@
 import { Server as SocketServer } from 'socket.io';
 import { Server as HttpServer } from 'http';
-
 let io: SocketServer;
-
 export function initSocket(httpServer: HttpServer, corsOrigin: string): SocketServer {
   io = new SocketServer(httpServer, {
     cors: {
@@ -10,33 +8,25 @@ export function initSocket(httpServer: HttpServer, corsOrigin: string): SocketSe
       methods: ['GET', 'POST'],
     },
   });
-
   io.on('connection', (socket) => {
     console.log(`🔌 Client connecté: ${socket.id}`);
-
     socket.on('join:room', (room: string) => {
       socket.join(room);
       console.log(`📡 ${socket.id} rejoint le salon: ${room}`);
     });
-
     socket.on('leave:room', (room: string) => {
       socket.leave(room);
     });
-
     socket.on('disconnect', () => {
       console.log(`❌ Client déconnecté: ${socket.id}`);
     });
   });
-
   return io;
 }
-
 export function getIO(): SocketServer {
   if (!io) throw new Error('Socket.io non initialisé');
   return io;
 }
-
-// Emit helpers for real-time broadcasting
 export const socketEmit = {
   deviceLocationUpdate(data: {
     deviceId: number;
@@ -47,7 +37,6 @@ export const socketEmit = {
   }) {
     if (io) io.emit('device:locationUpdate', data);
   },
-
   deviceStatusChange(data: {
     deviceId: number;
     status: string;
@@ -56,7 +45,6 @@ export const socketEmit = {
   }) {
     if (io) io.emit('device:statusChange', data);
   },
-
   newAlert(data: {
     id: number;
     type: string;
@@ -67,7 +55,6 @@ export const socketEmit = {
   }) {
     if (io) io.emit('alert:new', data);
   },
-
   alertAcknowledged(data: { id: number; acknowledgedBy: number }) {
     if (io) io.emit('alert:acknowledged', data);
   },

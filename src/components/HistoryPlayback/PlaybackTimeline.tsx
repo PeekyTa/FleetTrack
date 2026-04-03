@@ -1,6 +1,5 @@
 import React from 'react';
 import { Play, Pause, SkipBack, SkipForward } from 'lucide-react';
-
 interface PlaybackTimelineProps {
   progress: number;
   setProgress: (val: number | ((prev: number) => number)) => void;
@@ -10,13 +9,12 @@ interface PlaybackTimelineProps {
   setSpeed: (val: number) => void;
   historyPath: any[];
 }
-
 export function PlaybackTimeline({
   progress, setProgress, playing, setPlaying, speed, setSpeed, historyPath
 }: PlaybackTimelineProps) {
   return (
     <div className="bg-white border-t border-slate-200 px-6 py-4 shrink-0">
-      {/* Timeline slider */}
+      {}
       <div className="mb-4">
         <div className="flex justify-between text-xs text-slate-400 mb-1.5">
           <span>08:00</span>
@@ -36,7 +34,7 @@ export function PlaybackTimeline({
               accentColor: '#1E40AF',
             }}
           />
-          {/* Waypoint ticks */}
+          {}
           <div className="absolute top-0 left-0 right-0 h-2 pointer-events-none flex items-center">
             {historyPath.map((_, i) => {
               const pct = (i / (historyPath.length - 1)) * 100;
@@ -51,8 +49,7 @@ export function PlaybackTimeline({
           </div>
         </div>
       </div>
-
-      {/* Control buttons */}
+      {}
       <div className="flex items-center gap-3 justify-center">
         <button
           onClick={() => { setProgress(0); setPlaying(false); }}
@@ -73,8 +70,7 @@ export function PlaybackTimeline({
         >
           <SkipForward size={18} />
         </button>
-
-        {/* Speed selector */}
+        {}
         <div className="ml-4 flex items-center gap-2 border-l border-slate-200 pl-4">
           <span className="text-slate-500" style={{ fontSize: 12 }}>Speed:</span>
           {[0.5, 1, 2, 4].map(s => (
@@ -88,8 +84,7 @@ export function PlaybackTimeline({
             </button>
           ))}
         </div>
-
-        {/* Progress */}
+        {}
         <div className="ml-auto text-slate-400" style={{ fontSize: 12 }}>
           {Math.round(progress)}% complete
         </div>

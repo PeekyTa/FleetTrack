@@ -1,24 +1,20 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap, Circle, Polygon } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { DeviceLocation, GeofenceZone } from '../../types/index';
-
-// Fix Leaflet default icon issue
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
   iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
 });
-
 const STATUS_COLORS: Record<string, string> = {
   ONLINE: '#10B981',
   OFFLINE: '#94A3B8',
   LOW_BATTERY: '#F59E0B',
   WARNING: '#EF4444',
 };
-
 function createDeviceIcon(status: string): L.DivIcon {
   const color = STATUS_COLORS[status] || '#94A3B8';
   return L.divIcon({
@@ -38,11 +34,9 @@ function createDeviceIcon(status: string): L.DivIcon {
     popupAnchor: [0, -16],
   });
 }
-
 interface FitBoundsProps {
   locations: DeviceLocation[];
 }
-
 function FitBounds({ locations }: FitBoundsProps) {
   const map = useMap();
   useEffect(() => {
@@ -55,8 +49,6 @@ function FitBounds({ locations }: FitBoundsProps) {
   }, [locations, map]);
   return null;
 }
-
-// ===== Props =====
 interface LeafletMapProps {
   deviceLocations: DeviceLocation[];
   selectedDeviceId?: number | null;
@@ -67,16 +59,14 @@ interface LeafletMapProps {
   center?: [number, number];
   zoom?: number;
 }
-
 export function LeafletMap({
   deviceLocations,
-  selectedDeviceId,
   onDeviceClick,
   geofenceZones = [],
   showGeofences = false,
   height = '100%',
-  center = [48.8566, 2.3522],
-  zoom = 13,
+  center = [36.8065, 10.1815],
+  zoom = 10,
 }: LeafletMapProps) {
   return (
     <MapContainer
@@ -89,10 +79,8 @@ export function LeafletMap({
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-
       {deviceLocations.length > 0 && <FitBounds locations={deviceLocations} />}
-
-      {/* Device markers */}
+      {}
       {deviceLocations.map((dl) => (
         <Marker
           key={dl.deviceId}
@@ -134,8 +122,7 @@ export function LeafletMap({
           </Popup>
         </Marker>
       ))}
-
-      {/* Geofence zones */}
+      {}
       {showGeofences && geofenceZones.filter((z) => z.active).map((zone) => {
         const coords = zone.coordinates;
         if (coords.type === 'circle' && coords.center && coords.radius) {

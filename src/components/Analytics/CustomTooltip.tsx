@@ -1,5 +1,4 @@
 import React from 'react';
-
 export const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
   return (

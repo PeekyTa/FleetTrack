@@ -1,35 +1,30 @@
 import React from 'react';
 import { Trash2, Radio, MapPin, Clock, Edit2, AlertCircle, AlertTriangle, CheckCircle2, XCircle } from 'lucide-react';
 import { Device, DeviceStatus } from '../../app/data/mockData';
-
 const STATUS_COLORS: Record<DeviceStatus, string> = {
   online: '#10B981',
   offline: '#94A3B8',
   'low-battery': '#F59E0B',
   warning: '#F97316',
 };
-
 const STATUS_BG: Record<DeviceStatus, string> = {
   online: '#F0FDF4',
   offline: '#F8FAFC',
   'low-battery': '#FFFBEB',
   warning: '#FFF7ED',
 };
-
 const STATUS_LABELS: Record<DeviceStatus, string> = {
   online: 'Online',
   offline: 'Offline',
   'low-battery': 'Low Battery',
   warning: 'Warning',
 };
-
 const STATUS_ICONS: Record<DeviceStatus, React.ReactNode> = {
   online: <CheckCircle2 size={13} color="#10B981" />,
   offline: <XCircle size={13} color="#94A3B8" />,
   'low-battery': <AlertCircle size={13} color="#F59E0B" />,
   warning: <AlertTriangle size={13} color="#F97316" />,
 };
-
 function StatusBadge({ status }: { status: DeviceStatus }) {
   return (
     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-medium" style={{ backgroundColor: STATUS_BG[status], color: STATUS_COLORS[status], fontSize: 12 }}>
@@ -38,7 +33,6 @@ function StatusBadge({ status }: { status: DeviceStatus }) {
     </span>
   );
 }
-
 function BatteryBar({ value }: { value: number }) {
   const color = value < 20 ? '#EF4444' : value < 40 ? '#F59E0B' : '#10B981';
   return (
@@ -50,7 +44,6 @@ function BatteryBar({ value }: { value: number }) {
     </div>
   );
 }
-
 interface DeviceTableProps {
   filtered: Device[];
   deviceList: Device[];
@@ -60,7 +53,6 @@ interface DeviceTableProps {
   setEditDevice: (device: Device) => void;
   setDeleteId: (id: string) => void;
 }
-
 export function DeviceTable({ filtered, deviceList, selected, toggleSelect, toggleAll, setEditDevice, setDeleteId }: DeviceTableProps) {
   return (
     <div className="flex-1 overflow-auto p-6">

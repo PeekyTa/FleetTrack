@@ -3,11 +3,9 @@ import { Radio, Bell, TrendingUp, Signal } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend } from 'recharts';
 import { useAnalytics } from '../../hooks/useAnalytics';
 import { RoleGuard } from '../../guards/RoleGuard';
-
 export function Analytics() {
   const [period, setPeriod] = useState('week');
   const { deviceActivity, signalQuality, coverage, distance, alertStats, totalDistance, totalAlerts, loading } = useAnalytics(period);
-
   if (loading) {
     return (
       <RoleGuard allowedRoles={['ADMIN', 'SUPERVISOR']}>
@@ -15,18 +13,16 @@ export function Analytics() {
       </RoleGuard>
     );
   }
-
   const stats = [
     { icon: Radio, label: 'Appareils en Ligne', value: deviceActivity?.current.online ?? 0, color: '#10B981', bg: '#F0FDF4' },
     { icon: Bell, label: 'Alertes Totales', value: totalAlerts, color: '#EF4444', bg: '#FEF2F2' },
     { icon: TrendingUp, label: 'Distance (7j)', value: `${totalDistance} km`, color: '#1E40AF', bg: '#EFF6FF' },
     { icon: Signal, label: 'Signal Moyen', value: `${signalQuality.length > 0 ? Math.round(signalQuality.reduce((s: number, q: any) => s + q.value, 0) / signalQuality.length * 10) : 0}%`, color: '#7C3AED', bg: '#F5F3FF' },
   ];
-
   return (
     <RoleGuard allowedRoles={['ADMIN', 'SUPERVISOR']}>
       <div className="p-6 space-y-6 overflow-auto animate-fade-in-up">
-        {/* Period selector + Stats */}
+        {}
         <div className="flex items-center justify-between">
           <h2 className="text-slate-800 font-bold" style={{ fontSize: 18 }}>Analytique</h2>
           <div className="flex gap-1 bg-slate-100 rounded-xl p-1">
@@ -46,8 +42,7 @@ export function Analytics() {
             ))}
           </div>
         </div>
-
-        {/* Stats cards */}
+        {}
         <div className="grid grid-cols-4 gap-4">
           {stats.map((s) => (
             <div key={s.label} className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm flex items-center gap-4">
@@ -61,10 +56,9 @@ export function Analytics() {
             </div>
           ))}
         </div>
-
-        {/* Charts row 1 */}
+        {}
         <div className="grid grid-cols-2 gap-6">
-          {/* Activity timeline */}
+          {}
           <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
             <h3 className="text-slate-700 font-semibold mb-4" style={{ fontSize: 14 }}>Activité des Appareils</h3>
             <ResponsiveContainer width="100%" height={260}>
@@ -78,8 +72,7 @@ export function Analytics() {
               </LineChart>
             </ResponsiveContainer>
           </div>
-
-          {/* Distance covered */}
+          {}
           <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
             <h3 className="text-slate-700 font-semibold mb-4" style={{ fontSize: 14 }}>Distance Parcourue</h3>
             <ResponsiveContainer width="100%" height={260}>
@@ -93,10 +86,9 @@ export function Analytics() {
             </ResponsiveContainer>
           </div>
         </div>
-
-        {/* Charts row 2 */}
+        {}
         <div className="grid grid-cols-3 gap-6">
-          {/* Signal quality */}
+          {}
           <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
             <h3 className="text-slate-700 font-semibold mb-4" style={{ fontSize: 14 }}>Qualité du Signal</h3>
             <ResponsiveContainer width="100%" height={220}>
@@ -111,8 +103,7 @@ export function Analytics() {
               </PieChart>
             </ResponsiveContainer>
           </div>
-
-          {/* Coverage by group */}
+          {}
           <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
             <h3 className="text-slate-700 font-semibold mb-4" style={{ fontSize: 14 }}>Couverture par Groupe</h3>
             <div className="space-y-4">
@@ -129,8 +120,7 @@ export function Analytics() {
               ))}
             </div>
           </div>
-
-          {/* Alert distribution */}
+          {}
           <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
             <h3 className="text-slate-700 font-semibold mb-4" style={{ fontSize: 14 }}>Distribution des Alertes</h3>
             <ResponsiveContainer width="100%" height={220}>

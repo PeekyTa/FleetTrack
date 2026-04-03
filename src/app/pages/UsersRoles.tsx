@@ -4,14 +4,12 @@ import { useUsers } from '../../hooks/useUsers';
 import { RoleGuard } from '../../guards/RoleGuard';
 import type { User, UserRole } from '../../types/index';
 import { ROLE_PERMISSIONS } from '../../types/index';
-
 const ROLE_COLORS: Record<string, { color: string; bg: string }> = {
   ADMIN: { color: '#1E40AF', bg: '#EFF6FF' },
   SUPERVISOR: { color: '#0D9488', bg: '#F0FDFA' },
   OPERATOR: { color: '#EA580C', bg: '#FFF7ED' },
   VIEWER: { color: '#64748B', bg: '#F8FAFC' },
 };
-
 export function UsersRoles() {
   const { users, loading, createUser, updateUser, deleteUser } = useUsers();
   const [search, setSearch] = useState('');
@@ -19,7 +17,6 @@ export function UsersRoles() {
   const [editUser, setEditUser] = useState<User | null | undefined>(undefined);
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<'users' | 'permissions'>('users');
-
   const filtered = users.filter((u) => {
     const roleMatch = roleFilter === 'all' || u.role === roleFilter;
     const searchMatch = !search ||
@@ -27,7 +24,6 @@ export function UsersRoles() {
       u.email.toLowerCase().includes(search.toLowerCase());
     return roleMatch && searchMatch;
   });
-
   const handleSave = async (data: { name: string; email: string; password?: string; role?: string }) => {
     try {
       if (editUser) {
@@ -40,11 +36,10 @@ export function UsersRoles() {
       console.error('Error saving user:', err);
     }
   };
-
   return (
     <RoleGuard allowedRoles={['ADMIN']}>
       <div className="p-6 space-y-6 overflow-auto animate-fade-in-up">
-        {/* Tabs */}
+        {}
         <div className="flex items-center justify-between">
           <div className="flex gap-1 bg-slate-100 rounded-xl p-1">
             <button
@@ -72,10 +67,9 @@ export function UsersRoles() {
             </button>
           )}
         </div>
-
         {activeTab === 'users' ? (
           <>
-            {/* Search + filter */}
+            {}
             <div className="flex items-center gap-3">
               <div className="relative flex-1 max-w-sm">
                 <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -99,8 +93,7 @@ export function UsersRoles() {
                 ))}
               </div>
             </div>
-
-            {/* User table */}
+            {}
             <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
               {loading ? (
                 <div className="flex items-center justify-center h-48 text-slate-400">Chargement...</div>
@@ -164,8 +157,7 @@ export function UsersRoles() {
             </div>
           </>
         ) : (
-          /* Permissions matrix */
-          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+                    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-slate-100 bg-slate-50/50">
@@ -200,13 +192,11 @@ export function UsersRoles() {
             </table>
           </div>
         )}
-
-        {/* User form modal */}
+        {}
         {editUser !== undefined && (
           <UserFormModal user={editUser} onClose={() => setEditUser(undefined)} onSave={handleSave} />
         )}
-
-        {/* Delete modal */}
+        {}
         {deleteId !== null && (
           <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-sm animate-fade-in-up">
@@ -223,7 +213,6 @@ export function UsersRoles() {
     </RoleGuard>
   );
 }
-
 function UserFormModal({ user, onClose, onSave }: {
   user: User | null;
   onClose: () => void;
@@ -235,7 +224,6 @@ function UserFormModal({ user, onClose, onSave }: {
     password: '',
     role: user?.role || 'VIEWER',
   });
-
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md animate-fade-in-up">

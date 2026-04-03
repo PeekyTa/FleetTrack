@@ -5,7 +5,6 @@ import {
   Users, Settings, LogOut, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { ROLE_PERMISSIONS, type UserRole } from '../../types/index';
-
 interface SidebarProps {
   collapsed: boolean;
   setCollapsed: (v: boolean) => void;
@@ -13,7 +12,6 @@ interface SidebarProps {
   handleLogout: () => void;
   userRole: string;
 }
-
 const ALL_NAV_ITEMS = [
   { path: '/dashboard', icon: LayoutDashboard, label: 'Tableau de Bord', permission: 'viewDashboard' as const },
   { path: '/map', icon: Map, label: 'Carte en Direct', permission: 'viewMap' as const },
@@ -24,18 +22,16 @@ const ALL_NAV_ITEMS = [
   { path: '/users', icon: Users, label: 'Utilisateurs', permission: 'viewUsers' as const },
   { path: '/settings', icon: Settings, label: 'Paramètres', permission: 'viewSettings' as const },
 ];
-
 export function Sidebar({ collapsed, setCollapsed, unacknowledgedAlerts, handleLogout, userRole }: SidebarProps) {
   const permissions = ROLE_PERMISSIONS[userRole as UserRole] || ROLE_PERMISSIONS.VIEWER;
   const navItems = ALL_NAV_ITEMS.filter((item) => permissions[item.permission]);
-
   return (
     <aside
       className={`bg-white border-r border-slate-200 flex flex-col shrink-0 transition-all duration-300 ${
         collapsed ? 'w-[70px]' : 'w-[220px]'
       }`}
     >
-      {/* Logo */}
+      {}
       <div className="h-16 flex items-center gap-3 px-4 border-b border-slate-100 shrink-0">
         <div
           className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
@@ -50,8 +46,7 @@ export function Sidebar({ collapsed, setCollapsed, unacknowledgedAlerts, handleL
           </div>
         )}
       </div>
-
-      {/* Navigation */}
+      {}
       <nav className="flex-1 py-3 px-2 space-y-0.5 overflow-y-auto">
         {navItems.map(({ path, icon: Icon, label, permission }) => (
           <NavLink
@@ -71,7 +66,7 @@ export function Sidebar({ collapsed, setCollapsed, unacknowledgedAlerts, handleL
                 {label}
               </span>
             )}
-            {/* Alert badge */}
+            {}
             {permission === 'viewAlerts' && unacknowledgedAlerts > 0 && (
               <span
                 className={`px-1.5 py-0.5 rounded-full text-white font-bold ${
@@ -85,8 +80,7 @@ export function Sidebar({ collapsed, setCollapsed, unacknowledgedAlerts, handleL
           </NavLink>
         ))}
       </nav>
-
-      {/* Role badge */}
+      {}
       {!collapsed && (
         <div className="px-3 pb-2">
           <div
@@ -102,8 +96,7 @@ export function Sidebar({ collapsed, setCollapsed, unacknowledgedAlerts, handleL
           </div>
         </div>
       )}
-
-      {/* Bottom */}
+      {}
       <div className="border-t border-slate-100 p-2 space-y-1">
         <button
           onClick={() => setCollapsed(!collapsed)}

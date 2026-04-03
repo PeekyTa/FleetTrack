@@ -1,6 +1,5 @@
 import prisma from '../config/prisma.js';
 import { AlertType, AlertSeverity } from '@prisma/client';
-
 export const alertService = {
   async findAll(filters?: { acknowledged?: boolean; deviceId?: number; severity?: AlertSeverity }) {
     return prisma.alert.findMany({
@@ -15,14 +14,12 @@ export const alertService = {
       orderBy: { createdAt: 'desc' },
     });
   },
-
   async findForUserDevices(userId: number) {
     const assignments = await prisma.deviceAssignment.findMany({
       where: { userId },
       select: { deviceId: true },
     });
     const deviceIds = assignments.map((a) => a.deviceId);
-
     return prisma.alert.findMany({
       where: { deviceId: { in: deviceIds } },
       include: {
@@ -31,7 +28,6 @@ export const alertService = {
       orderBy: { createdAt: 'desc' },
     });
   },
-
   async create(data: {
     type: AlertType;
     severity: AlertSeverity;
@@ -45,7 +41,6 @@ export const alertService = {
       },
     });
   },
-
   async acknowledge(id: number, userId: number) {
     return prisma.alert.update({
       where: { id },
@@ -56,7 +51,6 @@ export const alertService = {
       },
     });
   },
-
   async acknowledgeAll(userId: number) {
     return prisma.alert.updateMany({
       where: { acknowledged: false },
@@ -67,7 +61,6 @@ export const alertService = {
       },
     });
   },
-
   async getStats() {
     const [total, unacknowledged, bySeverity, byType] = await Promise.all([
       prisma.alert.count(),

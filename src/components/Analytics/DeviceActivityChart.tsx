@@ -1,11 +1,9 @@
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { CustomTooltip } from './CustomTooltip';
-
 interface DeviceActivityChartProps {
   data: any[];
 }
-
 export function DeviceActivityChart({ data }: DeviceActivityChartProps) {
   return (
     <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm xl:col-span-2">

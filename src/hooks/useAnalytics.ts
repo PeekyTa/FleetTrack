@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { analyticsApi } from '../services/api';
 import type { AnalyticsDeviceActivity, SignalQuality, CoverageByGroup, DistanceByDay } from '../types/index';
-
 export function useAnalytics(period: string = 'week') {
   const [deviceActivity, setDeviceActivity] = useState<AnalyticsDeviceActivity | null>(null);
   const [signalQuality, setSignalQuality] = useState<SignalQuality[]>([]);
@@ -10,7 +9,6 @@ export function useAnalytics(period: string = 'week') {
   const [alertStats, setAlertStats] = useState<{ byType: any[]; bySeverity: any[] } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
   const fetchAll = useCallback(async () => {
     try {
       setLoading(true);
@@ -33,14 +31,11 @@ export function useAnalytics(period: string = 'week') {
       setLoading(false);
     }
   }, [period]);
-
   useEffect(() => {
     fetchAll();
   }, [fetchAll]);
-
   const totalDistance = distance.reduce((s, d) => s + d.km, 0);
   const totalAlerts = alertStats?.byType.reduce((s: number, d: any) => s + d.count, 0) ?? 0;
-
   return {
     deviceActivity, signalQuality, coverage, distance, alertStats,
     totalDistance, totalAlerts, loading, error, fetchAll,

@@ -1,11 +1,9 @@
 import React from 'react';
 import { Shield, Battery, WifiOff, Zap } from 'lucide-react';
 import { GeofenceZone } from '../../app/data/mockData';
-
 interface AlertRulesSummaryProps {
   zones: GeofenceZone[];
 }
-
 export function AlertRulesSummary({ zones }: AlertRulesSummaryProps) {
   return (
     <div className="border-t border-slate-100 p-4 shrink-0">

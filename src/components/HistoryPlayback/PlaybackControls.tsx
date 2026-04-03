@@ -1,7 +1,6 @@
 import React from 'react';
 import { ChevronDown, Calendar, Radio } from 'lucide-react';
 import { Device } from '../../app/data/mockData';
-
 interface PlaybackControlsProps {
   devices: Device[];
   selectedDeviceId: string;
@@ -16,7 +15,6 @@ interface PlaybackControlsProps {
   historyPath: any[];
   progressIndex: number;
 }
-
 export function PlaybackControls({
   devices, selectedDeviceId, setSelectedDeviceId,
   dateFrom, setDateFrom, dateTo, setDateTo,
@@ -27,8 +25,7 @@ export function PlaybackControls({
     <div className="w-72 bg-white border-r border-slate-200 flex flex-col shrink-0 overflow-y-auto">
       <div className="p-5 border-b border-slate-100">
         <h3 className="text-slate-800 font-semibold mb-4" style={{ fontSize: 14 }}>Playback Controls</h3>
-
-        {/* Device selector */}
+        {}
         <div className="mb-4">
           <label className="block text-slate-500 mb-1.5" style={{ fontSize: 12, fontWeight: 500 }}>Select Device</label>
           <div className="relative">
@@ -45,8 +42,7 @@ export function PlaybackControls({
             <ChevronDown size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
           </div>
         </div>
-
-        {/* Date range */}
+        {}
         <div className="space-y-3">
           <div>
             <label className="block text-slate-500 mb-1.5" style={{ fontSize: 12, fontWeight: 500 }}>From</label>
@@ -75,7 +71,6 @@ export function PlaybackControls({
             </div>
           </div>
         </div>
-
         <button
           onClick={() => { setProgress(0); setPlaying(true); }}
           className="w-full mt-4 py-2.5 rounded-xl text-white font-medium"
@@ -84,8 +79,7 @@ export function PlaybackControls({
           Load History
         </button>
       </div>
-
-      {/* Selected device info */}
+      {}
       {selectedDevice && (
         <div className="p-5 border-b border-slate-100">
           <div className="flex items-center gap-3 mb-3">
@@ -109,8 +103,7 @@ export function PlaybackControls({
           </div>
         </div>
       )}
-
-      {/* Route waypoints */}
+      {}
       <div className="p-5 flex-1">
         <h4 className="text-slate-600 font-semibold mb-3" style={{ fontSize: 13 }}>Route Waypoints</h4>
         <div className="relative">

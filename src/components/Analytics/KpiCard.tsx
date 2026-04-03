@@ -1,6 +1,5 @@
 import React from 'react';
 import { TrendingUp, TrendingDown } from 'lucide-react';
-
 interface KpiCardProps {
   label: string;
   value: string | number;
@@ -12,7 +11,6 @@ interface KpiCardProps {
   bg: string;
   sub?: string;
 }
-
 export function KpiCard({ label, value, unit, trend, trendUp, icon: Icon, color, bg, sub }: KpiCardProps) {
   return (
     <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">

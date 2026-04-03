@@ -1,5 +1,4 @@
 import swaggerJsdoc from 'swagger-jsdoc';
-
 const options: swaggerJsdoc.Options = {
   definition: {
     openapi: '3.0.0',
@@ -8,7 +7,6 @@ const options: swaggerJsdoc.Options = {
       version: '1.0.0',
       description: `
 API REST pour la gestion et le suivi en temps réel des radios POC (Push-to-Talk over Cellular).
-
 ## Fonctionnalités principales
 - **Authentification** : Inscription, connexion, gestion de profil (JWT)
 - **Appareils** : CRUD complet avec gestion par groupes
@@ -17,7 +15,6 @@ API REST pour la gestion et le suivi en temps réel des radios POC (Push-to-Talk
 - **Géorepérage** : Création et gestion des zones
 - **Utilisateurs** : Gestion des utilisateurs et rôles (RBAC)
 - **Analytique** : Statistiques et indicateurs de performance
-
 ## Rôles disponibles
 | Rôle | Description |
 |------|-------------|
@@ -56,5 +53,4 @@ API REST pour la gestion et le suivi en temps réel des radios POC (Push-to-Talk
   },
   apis: ['./src/routes/*.ts'],
 };
-
 export const swaggerSpec = swaggerJsdoc(options);

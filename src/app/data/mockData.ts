@@ -2,7 +2,6 @@ export type DeviceStatus = 'online' | 'offline' | 'low-battery' | 'warning';
 export type AlertSeverity = 'critical' | 'high' | 'medium' | 'low';
 export type UserRole = 'Admin' | 'Supervisor' | 'Viewer';
 export type UserStatus = 'active' | 'inactive';
-
 export interface Device {
   id: string;
   name: string;
@@ -17,7 +16,6 @@ export interface Device {
   mapX: number;
   mapY: number;
 }
-
 export interface Alert {
   id: number;
   type: 'geofence-exit' | 'geofence-enter' | 'low-battery' | 'signal-lost' | 'sos';
@@ -28,7 +26,6 @@ export interface Alert {
   severity: AlertSeverity;
   acknowledged: boolean;
 }
-
 export interface User {
   id: number;
   name: string;
@@ -39,7 +36,6 @@ export interface User {
   devicesAccess: number;
   avatar: string;
 }
-
 export interface GeofenceZone {
   id: string;
   name: string;
@@ -52,7 +48,6 @@ export interface GeofenceZone {
   center?: { x: number; y: number };
   radius?: number;
 }
-
 export const devices: Device[] = [
   {
     id: 'RD-001', name: 'Alpha Unit 1', group: 'Field Team A',
@@ -125,9 +120,7 @@ export const devices: Device[] = [
     mapX: 660, mapY: 265,
   },
 ];
-
 export const groups = ['All Groups', 'Field Team A', 'Field Team B', 'Security', 'Logistics', 'Maintenance'];
-
 export const alerts: Alert[] = [
   { id: 1, type: 'geofence-exit', device: 'Beta Unit 2', deviceId: 'RD-004', message: 'Exited Zone Alpha perimeter', time: '14:32', severity: 'high', acknowledged: false },
   { id: 2, type: 'low-battery', device: 'Beta Unit 1', deviceId: 'RD-003', message: 'Battery level below 15%', time: '14:28', severity: 'medium', acknowledged: false },
@@ -136,7 +129,6 @@ export const alerts: Alert[] = [
   { id: 5, type: 'sos', device: 'Delta Unit 1', deviceId: 'RD-007', message: 'Emergency SOS signal activated', time: '14:45', severity: 'critical', acknowledged: false },
   { id: 6, type: 'low-battery', device: 'Delta Unit 1', deviceId: 'RD-007', message: 'Battery level below 35%', time: '13:12', severity: 'medium', acknowledged: true },
 ];
-
 export const users: User[] = [
   { id: 1, name: 'Marcus Johnson', email: 'mjohnson@fleet.com', role: 'Admin', status: 'active', lastLogin: '2 min ago', devicesAccess: 10, avatar: 'MJ' },
   { id: 2, name: 'Sarah Chen', email: 'schen@fleet.com', role: 'Supervisor', status: 'active', lastLogin: '1 hr ago', devicesAccess: 6, avatar: 'SC' },
@@ -145,7 +137,6 @@ export const users: User[] = [
   { id: 5, name: 'James Park', email: 'jpark@fleet.com', role: 'Viewer', status: 'active', lastLogin: '30 min ago', devicesAccess: 3, avatar: 'JP' },
   { id: 6, name: 'Lisa Thompson', email: 'lthompson@fleet.com', role: 'Admin', status: 'active', lastLogin: 'just now', devicesAccess: 10, avatar: 'LT' },
 ];
-
 export const geofenceZones: GeofenceZone[] = [
   {
     id: 'zone-alpha',
@@ -179,7 +170,6 @@ export const geofenceZones: GeofenceZone[] = [
     radius: 90,
   },
 ];
-
 export const historyPath = [
   { x: 250, y: 560, time: '08:00', speed: 0 },
   { x: 300, y: 490, time: '08:15', speed: 12 },
@@ -191,7 +181,6 @@ export const historyPath = [
   { x: 600, y: 210, time: '09:45', speed: 10 },
   { x: 660, y: 265, time: '10:00', speed: 8 },
 ];
-
 export const analyticsData = {
   activeDevicesHistory: [
     { time: '08:00', online: 6, offline: 4 },

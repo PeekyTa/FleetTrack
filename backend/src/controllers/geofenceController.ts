@@ -1,7 +1,6 @@
 import { Response } from 'express';
 import { geofenceService } from '../services/geofenceService.js';
 import { AuthenticatedRequest } from '../middleware/authMiddleware.js';
-
 export const geofenceController = {
   async getAll(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
@@ -11,7 +10,6 @@ export const geofenceController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async getById(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const zone = await geofenceService.findById(parseInt(req.params.id as string));
@@ -21,7 +19,6 @@ export const geofenceController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async create(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const { name, type, color, alertOnEnter, alertOnExit, coordinates } = req.body;
@@ -37,7 +34,6 @@ export const geofenceController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async update(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const zone = await geofenceService.update(parseInt(req.params.id as string), req.body);
@@ -46,7 +42,6 @@ export const geofenceController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async delete(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       await geofenceService.delete(parseInt(req.params.id as string));
@@ -55,7 +50,6 @@ export const geofenceController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async toggleActive(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const zone = await geofenceService.toggleActive(parseInt(req.params.id as string));

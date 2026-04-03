@@ -1,14 +1,12 @@
 import React from 'react';
 import { Clock, CheckCircle2 } from 'lucide-react';
 import { Alert } from '../../app/data/mockData';
-
 const SEVERITY_CONFIG: Record<string, any> = {
   critical: { bg: '#FEF2F2', text: '#DC2626', border: '#FECACA', label: 'Critical', dot: '#EF4444' },
   high: { bg: '#FFF7ED', text: '#C2410C', border: '#FED7AA', label: 'High', dot: '#F97316' },
   medium: { bg: '#FFFBEB', text: '#B45309', border: '#FDE68A', label: 'Medium', dot: '#F59E0B' },
   low: { bg: '#F0FDF4', text: '#15803D', border: '#BBF7D0', label: 'Low', dot: '#10B981' },
 };
-
 const ALERT_TYPE_CONFIG: Record<string, any> = {
   'geofence-exit': { icon: '🚧', label: 'Geofence Exit', color: '#F97316' },
   'geofence-enter': { icon: '📍', label: 'Geofence Enter', color: '#3B82F6' },
@@ -16,14 +14,12 @@ const ALERT_TYPE_CONFIG: Record<string, any> = {
   'signal-lost': { icon: '📵', label: 'Signal Lost', color: '#EF4444' },
   'sos': { icon: '🆘', label: 'SOS Alert', color: '#DC2626' },
 };
-
 interface AlertsListProps {
   alertList: Alert[];
   unackAlerts: Alert[];
   acknowledgeAll: () => void;
   acknowledgeAlert: (id: number) => void;
 }
-
 export function AlertsList({ alertList, unackAlerts, acknowledgeAll, acknowledgeAlert }: AlertsListProps) {
   return (
     <div className="flex-1 overflow-y-auto">

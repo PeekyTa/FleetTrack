@@ -1,13 +1,11 @@
 import React from 'react';
 import { Plus } from 'lucide-react';
-
 interface GroupPanelProps {
   deviceList: any[];
   groupFilter: string;
   setGroupFilter: (group: string) => void;
   groupCounts: { group: string; count: number; online: number }[];
 }
-
 export function GroupPanel({ deviceList, groupFilter, setGroupFilter, groupCounts }: GroupPanelProps) {
   return (
     <div className="w-56 bg-white border-r border-slate-200 p-4 shrink-0 flex flex-col gap-3">
@@ -35,7 +33,6 @@ export function GroupPanel({ deviceList, groupFilter, setGroupFilter, groupCount
           </button>
         ))}
       </div>
-
       <div className="mt-auto pt-4 border-t border-slate-100">
         <div className="bg-blue-50 border border-blue-100 rounded-xl p-3">
           <div className="text-blue-700 font-semibold" style={{ fontSize: 20 }}>{deviceList.length}</div>

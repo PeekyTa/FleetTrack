@@ -1,7 +1,6 @@
 import { Response } from 'express';
 import { userService } from '../services/userService.js';
 import { AuthenticatedRequest } from '../middleware/authMiddleware.js';
-
 export const userController = {
   async getAll(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
@@ -11,7 +10,6 @@ export const userController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async getById(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const user = await userService.findById(parseInt(req.params.id));
@@ -21,7 +19,6 @@ export const userController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async create(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const { name, email, password, role } = req.body;
@@ -35,7 +32,6 @@ export const userController = {
       res.status(400).json({ message: error.message });
     }
   },
-
   async update(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const user = await userService.update(parseInt(req.params.id), req.body);
@@ -44,7 +40,6 @@ export const userController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async delete(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       await userService.delete(parseInt(req.params.id));
@@ -53,7 +48,6 @@ export const userController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async getStats(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const stats = await userService.getStats();

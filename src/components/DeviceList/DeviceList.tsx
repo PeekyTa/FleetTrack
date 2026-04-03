@@ -2,7 +2,6 @@ import React from 'react';
 import { NavLink } from 'react-router';
 import { ChevronRight, Radio, MapPin, Battery } from 'lucide-react';
 import { devices } from '../../app/data/mockData';
-
 export function DeviceList() {
   return (
     <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">

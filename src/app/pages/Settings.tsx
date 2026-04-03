@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Globe, Shield, Bell, Map, Code, Save, RefreshCw } from 'lucide-react';
 import { RoleGuard } from '../../guards/RoleGuard';
-
 interface SettingSection {
   icon: any;
   title: string;
   description: string;
   fields: { key: string; label: string; type: 'text' | 'select' | 'number' | 'toggle'; value: any; options?: { value: string; label: string }[] }[];
 }
-
 export function Settings() {
   const [saved, setSaved] = useState(false);
   const [settings, setSettings] = useState({
@@ -27,18 +25,14 @@ export function Settings() {
     sms_alerts: false,
     alert_sound: true,
   });
-
   const handleChange = (key: string, value: any) => {
     setSettings((prev) => ({ ...prev, [key]: value }));
     setSaved(false);
   };
-
   const handleSave = () => {
-    // Would call API here
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
   };
-
   const sections: SettingSection[] = [
     {
       icon: Globe,
@@ -99,7 +93,6 @@ export function Settings() {
       ],
     },
   ];
-
   return (
     <RoleGuard allowedRoles={['ADMIN']}>
       <div className="p-6 space-y-6 overflow-auto max-w-4xl mx-auto animate-fade-in-up">
@@ -116,7 +109,6 @@ export function Settings() {
             {saved ? <><RefreshCw size={14} /> Enregistré !</> : <><Save size={14} /> Enregistrer</>}
           </button>
         </div>
-
         {sections.map((section) => (
           <div key={section.title} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
             <div className="px-6 py-4 border-b border-slate-100 flex items-center gap-3">
@@ -171,8 +163,7 @@ export function Settings() {
             </div>
           </div>
         ))}
-
-        {/* API Keys Info */}
+        {}
         <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-slate-100 flex items-center gap-3">
             <Code size={18} className="text-blue-600" />

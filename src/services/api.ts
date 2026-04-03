@@ -4,27 +4,21 @@ import type {
   Alert, GeofenceZone, AnalyticsDeviceActivity, AnalyticsAlertStats,
   SignalQuality, CoverageByGroup, DistanceByDay,
 } from '../types/index';
-
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-
 const api = axios.create({
   baseURL: API_URL,
   headers: { 'Content-Type': 'application/json' },
 });
-
-// Attach JWT token to every request
 api.interceptors.request.use((config) => {
   const stored = localStorage.getItem('userInfo');
   if (stored) {
     try {
       const { token } = JSON.parse(stored) as AuthUser;
       if (token) config.headers.Authorization = `Bearer ${token}`;
-    } catch { /* noop */ }
+    } catch {  }
   }
   return config;
 });
-
-// Auto-logout on 401
 api.interceptors.response.use(
   (res) => res,
   (error) => {
@@ -35,8 +29,6 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-// ===== Auth =====
 export const authApi = {
   login: async (email: string, password: string): Promise<AuthUser> => {
     const { data } = await api.post('/auth/login', { email, password });
@@ -55,8 +47,6 @@ export const authApi = {
     localStorage.removeItem('userInfo');
   },
 };
-
-// ===== Devices =====
 export const deviceApi = {
   getAll: async (): Promise<Device[]> => {
     const { data } = await api.get('/devices');
@@ -85,8 +75,6 @@ export const deviceApi = {
     await api.post('/devices/assign', { userId, deviceId });
   },
 };
-
-// ===== Locations =====
 export const locationApi = {
   getAllLatest: async (): Promise<DeviceLocation[]> => {
     const { data } = await api.get('/locations/all/latest');
@@ -109,8 +97,6 @@ export const locationApi = {
     return data;
   },
 };
-
-// ===== Alerts =====
 export const alertApi = {
   getAll: async (acknowledged?: boolean): Promise<Alert[]> => {
     const params = acknowledged !== undefined ? `?acknowledged=${acknowledged}` : '';
@@ -130,8 +116,6 @@ export const alertApi = {
     return data;
   },
 };
-
-// ===== Geofences =====
 export const geofenceApi = {
   getAll: async (): Promise<GeofenceZone[]> => {
     const { data } = await api.get('/geofences');
@@ -153,8 +137,6 @@ export const geofenceApi = {
     return data;
   },
 };
-
-// ===== Users =====
 export const userApi = {
   getAll: async (): Promise<User[]> => {
     const { data } = await api.get('/users');
@@ -176,8 +158,6 @@ export const userApi = {
     return data;
   },
 };
-
-// ===== Analytics =====
 export const analyticsApi = {
   getDashboard: async (): Promise<any> => {
     const { data } = await api.get('/analytics/dashboard');
@@ -204,5 +184,4 @@ export const analyticsApi = {
     return data;
   },
 };
-
 export default api;

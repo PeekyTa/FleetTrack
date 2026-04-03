@@ -5,7 +5,6 @@ import { useDevices } from '../../hooks/useDevices';
 import { useLocations } from '../../hooks/useLocations';
 import { useAlerts } from '../../hooks/useAlerts';
 import type { DeviceLocation } from '../../types/index';
-
 function StatCard({ label, value, icon: Icon, color, bg }: {
   label: string; value: number | string; icon: any; color: string; bg: string;
 }) {
@@ -21,7 +20,6 @@ function StatCard({ label, value, icon: Icon, color, bg }: {
     </div>
   );
 }
-
 function DeviceListPanel({ deviceLocations }: { deviceLocations: DeviceLocation[] }) {
   const STATUS_INFO: Record<string, { color: string; bg: string; label: string }> = {
     ONLINE: { color: '#10B981', bg: '#F0FDF4', label: 'En ligne' },
@@ -29,7 +27,6 @@ function DeviceListPanel({ deviceLocations }: { deviceLocations: DeviceLocation[
     LOW_BATTERY: { color: '#F59E0B', bg: '#FFFBEB', label: 'Batterie faible' },
     WARNING: { color: '#EF4444', bg: '#FEF2F2', label: 'Alerte' },
   };
-
   return (
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
       <div className="px-5 py-4 border-b border-slate-100">
@@ -61,29 +58,25 @@ function DeviceListPanel({ deviceLocations }: { deviceLocations: DeviceLocation[
     </div>
   );
 }
-
 export function Dashboard() {
   const { stats, loading: devLoading } = useDevices();
   const { deviceLocations, loading: locLoading } = useLocations();
   const { unacknowledgedCount } = useAlerts();
-
   const statCards = [
     { label: 'Total Appareils', value: stats?.total ?? '—', icon: Radio, color: '#1E40AF', bg: '#EFF6FF' },
     { label: 'En Ligne', value: stats?.online ?? '—', icon: Wifi, color: '#10B981', bg: '#F0FDF4' },
     { label: 'Hors Ligne', value: stats?.offline ?? '—', icon: WifiOff, color: '#94A3B8', bg: '#F8FAFC' },
     { label: 'Alertes Actives', value: unacknowledgedCount, icon: AlertTriangle, color: '#EF4444', bg: '#FEF2F2' },
   ];
-
   return (
     <div className="p-6 space-y-6 animate-fade-in-up flex flex-col">
-      {/* Stats row */}
+      {}
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
         {statCards.map((s) => (
           <StatCard key={s.label} {...s} />
         ))}
       </div>
-
-      {/* Map + Device list */}
+      {}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         <div className="xl:col-span-2">
           <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden" style={{ height: 480 }}>

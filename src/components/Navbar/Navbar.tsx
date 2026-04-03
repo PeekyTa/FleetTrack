@@ -1,7 +1,6 @@
 import React from 'react';
 import { Bell, Moon, Sun, Search, Wifi, WifiOff } from 'lucide-react';
 import { useSocket } from '../../context/SocketContext';
-
 interface NavbarProps {
   currentTitle: string;
   darkMode: boolean;
@@ -10,24 +9,20 @@ interface NavbarProps {
   userName?: string;
   userRole?: string;
 }
-
 export function Navbar({ currentTitle, darkMode, setDarkMode, unacknowledgedAlerts, userName, userRole }: NavbarProps) {
   const { connected } = useSocket();
-
   return (
     <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shrink-0">
       <div>
         <h1 className="text-slate-800 font-semibold" style={{ fontSize: 18 }}>{currentTitle}</h1>
       </div>
-
       <div className="flex items-center gap-3">
-        {/* Connection status */}
+        {}
         <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full ${connected ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-500'}`} style={{ fontSize: 11 }}>
           {connected ? <Wifi size={12} /> : <WifiOff size={12} />}
           {connected ? 'Connecté' : 'Hors ligne'}
         </div>
-
-        {/* Search */}
+        {}
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
@@ -37,16 +32,14 @@ export function Navbar({ currentTitle, darkMode, setDarkMode, unacknowledgedAler
             style={{ fontSize: 13, width: 200 }}
           />
         </div>
-
-        {/* Dark mode toggle */}
+        {}
         <button
           onClick={() => setDarkMode(!darkMode)}
           className="p-2 rounded-xl text-slate-400 hover:bg-slate-50 hover:text-slate-600 transition-colors"
         >
           {darkMode ? <Sun size={18} /> : <Moon size={18} />}
         </button>
-
-        {/* Alerts */}
+        {}
         <button className="relative p-2 rounded-xl text-slate-400 hover:bg-slate-50 hover:text-slate-600">
           <Bell size={18} />
           {unacknowledgedAlerts > 0 && (
@@ -55,8 +48,7 @@ export function Navbar({ currentTitle, darkMode, setDarkMode, unacknowledgedAler
             </span>
           )}
         </button>
-
-        {/* User avatar */}
+        {}
         <div className="flex items-center gap-2 pl-3 border-l border-slate-200">
           <div
             className="w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold"

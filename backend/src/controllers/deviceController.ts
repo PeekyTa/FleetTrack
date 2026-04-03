@@ -1,25 +1,21 @@
 import { Response } from 'express';
 import { deviceService } from '../services/deviceService.js';
 import { AuthenticatedRequest } from '../middleware/authMiddleware.js';
-
 export const deviceController = {
   async getAll(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const userRole = req.user?.role;
       let devices;
-
       if (userRole === 'ADMIN' || userRole === 'SUPERVISOR') {
         devices = await deviceService.findAll();
       } else {
         devices = await deviceService.findAssignedToUser(req.user!.id);
       }
-
       res.json(devices);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
   },
-
   async getById(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const device = await deviceService.findById(parseInt(req.params.id as string));
@@ -29,7 +25,6 @@ export const deviceController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async create(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const { name, deviceIdentifier, groupName, model, imei } = req.body;
@@ -43,7 +38,6 @@ export const deviceController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async update(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const device = await deviceService.update(parseInt(req.params.id as string), req.body);
@@ -52,7 +46,6 @@ export const deviceController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async delete(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       await deviceService.delete(parseInt(req.params.id as string));
@@ -61,7 +54,6 @@ export const deviceController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async getStats(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const stats = await deviceService.getStats();
@@ -70,7 +62,6 @@ export const deviceController = {
       res.status(500).json({ message: error.message });
     }
   },
-
   async assignDevice(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const { userId, deviceId } = req.body;

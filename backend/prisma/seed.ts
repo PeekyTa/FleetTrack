@@ -1,12 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
-
 const prisma = new PrismaClient();
-
 async function main() {
   console.log('🌱 Début du semis de données...');
-
-  // Clear existing data
   await prisma.auditLog.deleteMany();
   await prisma.deviceAssignment.deleteMany();
   await prisma.location.deleteMany();
@@ -15,11 +11,8 @@ async function main() {
   await prisma.device.deleteMany();
   await prisma.user.deleteMany();
   await prisma.setting.deleteMany();
-
-  // --- USERS (6) ---
   const salt = await bcrypt.genSalt(10);
   const defaultPass = await bcrypt.hash('password123', salt);
-
   const users = await Promise.all([
     prisma.user.create({
       data: { name: 'Marcus Johnson', email: 'admin@fleettrack.io', password: await bcrypt.hash('admin123', salt), role: 'ADMIN', status: 'active', lastLogin: new Date() },
@@ -41,8 +34,6 @@ async function main() {
     }),
   ]);
   console.log(`✅ ${users.length} utilisateurs créés`);
-
-  // --- DEVICES (10) ---
   const devices = await Promise.all([
     prisma.device.create({
       data: { deviceIdentifier: 'RD-001', name: 'Alpha Unit 1', groupName: 'Équipe Terrain A', model: 'Motorola SL7550e', imei: '354800121234567', status: 'ONLINE', battery: 92, signal: 95, lastSeen: new Date() },
@@ -76,22 +67,16 @@ async function main() {
     }),
   ]);
   console.log(`✅ ${devices.length} appareils créés`);
-
-  // --- DEVICE ASSIGNMENTS ---
-  // Operator sees 5 devices, Viewer sees 3 devices
   await prisma.deviceAssignment.createMany({
     data: [
-      // David Rodriguez (Operator) - assigned 5 devices
       { userId: users[2].id, deviceId: devices[0].id },
       { userId: users[2].id, deviceId: devices[1].id },
       { userId: users[2].id, deviceId: devices[4].id },
       { userId: users[2].id, deviceId: devices[5].id },
       { userId: users[2].id, deviceId: devices[7].id },
-      // James Park (Viewer) - assigned 3 devices
       { userId: users[4].id, deviceId: devices[0].id },
       { userId: users[4].id, deviceId: devices[2].id },
       { userId: users[4].id, deviceId: devices[9].id },
-      // Lisa Thompson (Operator) - assigned 4 devices
       { userId: users[5].id, deviceId: devices[2].id },
       { userId: users[5].id, deviceId: devices[3].id },
       { userId: users[5].id, deviceId: devices[6].id },
@@ -99,25 +84,21 @@ async function main() {
     ],
   });
   console.log('✅ Assignations d\'appareils créées');
-
-  // --- LOCATIONS (seed traces for 8 active devices) ---
   const baseLocations: { lat: number; lng: number }[] = [
-    { lat: 48.8566, lng: 2.3522 },   // Paris center
-    { lat: 48.8606, lng: 2.3376 },   // Louvre
-    { lat: 48.8530, lng: 2.3499 },   // Notre Dame
-    { lat: 48.8738, lng: 2.2950 },   // Arc de Triomphe
-    { lat: 48.8584, lng: 2.2945 },   // Eiffel Tower
-    { lat: 48.8462, lng: 2.3464 },   // Luxembourg
-    { lat: 48.8867, lng: 2.3431 },   // Montmartre
-    { lat: 48.8529, lng: 2.3700 },   // Bastille
-    { lat: 48.8400, lng: 2.3200 },   // Montparnasse
-    { lat: 48.8650, lng: 2.3800 },   // Belleville
+    { lat: 36.8065, lng: 10.1815 },
+    { lat: 36.8121, lng: 10.1691 },
+    { lat: 36.8529, lng: 10.3217 },
+    { lat: 36.8837, lng: 10.3303 },
+    { lat: 36.8286, lng: 10.1772 },
+    { lat: 36.7915, lng: 10.1555 },
+    { lat: 36.7667, lng: 10.2333 },
+    { lat: 36.8546, lng: 10.1983 },
+    { lat: 36.8378, lng: 10.2974 },
+    { lat: 36.8665, lng: 10.2524 },
   ];
-
   const locationData = [];
   for (let i = 0; i < devices.length; i++) {
     const base = baseLocations[i];
-    // Create a trajectory of 20 points over the last 2 hours
     for (let j = 0; j < 20; j++) {
       locationData.push({
         deviceId: devices[i].id,
@@ -126,14 +107,12 @@ async function main() {
         speed: 5 + Math.random() * 30,
         altitude: 35 + Math.random() * 10,
         heading: Math.random() * 360,
-        timestamp: new Date(Date.now() - (20 - j) * 360000), // Every 6 minutes
+        timestamp: new Date(Date.now() - (20 - j) * 360000), 
       });
     }
   }
   await prisma.location.createMany({ data: locationData });
   console.log(`✅ ${locationData.length} positions GPS créées`);
-
-  // --- ALERTS ---
   const alerts = await Promise.all([
     prisma.alert.create({
       data: { type: 'GEOFENCE_EXIT', severity: 'HIGH', deviceId: devices[3].id, message: 'Sortie du périmètre Zone Alpha', acknowledged: false },
@@ -155,8 +134,6 @@ async function main() {
     }),
   ]);
   console.log(`✅ ${alerts.length} alertes créées`);
-
-  // --- GEOFENCE ZONES (3) ---
   const zones = await Promise.all([
     prisma.geofenceZone.create({
       data: {
@@ -169,10 +146,10 @@ async function main() {
         coordinates: {
           type: 'polygon',
           points: [
-            { lat: 48.854, lng: 2.335 },
-            { lat: 48.862, lng: 2.335 },
-            { lat: 48.862, lng: 2.355 },
-            { lat: 48.854, lng: 2.355 },
+            { lat: 36.805, lng: 10.175 },
+            { lat: 36.815, lng: 10.175 },
+            { lat: 36.815, lng: 10.185 },
+            { lat: 36.805, lng: 10.185 },
           ],
         },
       },
@@ -188,10 +165,10 @@ async function main() {
         coordinates: {
           type: 'polygon',
           points: [
-            { lat: 48.850, lng: 2.365 },
-            { lat: 48.860, lng: 2.365 },
-            { lat: 48.860, lng: 2.390 },
-            { lat: 48.850, lng: 2.390 },
+            { lat: 36.850, lng: 10.315 },
+            { lat: 36.860, lng: 10.315 },
+            { lat: 36.860, lng: 10.330 },
+            { lat: 36.850, lng: 10.330 },
           ],
         },
       },
@@ -206,15 +183,13 @@ async function main() {
         alertOnExit: false,
         coordinates: {
           type: 'circle',
-          center: { lat: 48.845, lng: 2.295 },
+          center: { lat: 36.828, lng: 10.177 },
           radius: 500,
         },
       },
     }),
   ]);
   console.log(`✅ ${zones.length} zones de géorepérage créées`);
-
-  // --- DEFAULT SETTINGS ---
   await prisma.setting.createMany({
     data: [
       { key: 'company_name', value: JSON.parse('"FleetTrack Operations"') },
@@ -228,7 +203,6 @@ async function main() {
     ],
   });
   console.log('✅ Paramètres par défaut créés');
-
   console.log('\n🎉 Semis terminé avec succès !');
   console.log(`
 📊 Résumé :
@@ -239,7 +213,6 @@ async function main() {
    - ${zones.length} zones de géorepérage
   `);
 }
-
 main()
   .catch((e) => {
     console.error('❌ Erreur lors du semis:', e);

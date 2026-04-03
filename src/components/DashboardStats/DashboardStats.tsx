@@ -1,13 +1,11 @@
 import React from 'react';
 import { Activity, WifiOff, AlertTriangle, MapPin } from 'lucide-react';
 import { devices, alerts } from '../../app/data/mockData';
-
 export function DashboardStats() {
   const online = devices.filter((d: any) => d.status === 'online').length;
   const offline = devices.filter((d: any) => d.status === 'offline').length;
   const totalDevices = devices.length;
   const unacknowledged = alerts.filter((a: any) => !a.acknowledged).length;
-
   const kpis = [
     {
       label: 'Online Devices',
@@ -50,7 +48,6 @@ export function DashboardStats() {
       trendUp: true,
     },
   ];
-
   return (
     <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
       {kpis.map((kpi, i) => {
@@ -72,7 +69,7 @@ export function DashboardStats() {
                 <Icon size={20} style={{ color: kpi.color }} />
               </div>
             </div>
-            {/* Progress bar */}
+            {}
             {kpi.total && (
               <div className="mb-3">
                 <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
