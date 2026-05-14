@@ -27,8 +27,11 @@ export function Navbar({ currentTitle, darkMode, setDarkMode, unacknowledgedAler
         </div>
         {}
         <div className="relative hidden md:block">
+          <label htmlFor="navbar-search" className="sr-only">Rechercher</label>
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
+            id="navbar-search"
+            name="navbar-search"
             type="text"
             placeholder="Rechercher..."
             className="pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 placeholder-slate-400 focus:outline-none focus:border-blue-400"

@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { Plus, Search, Edit2, Trash2, X, Radio, Wifi, WifiOff, BatteryLow, AlertTriangle } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Plus, Search, Edit2, Trash2, X } from 'lucide-react';
 import { useDevices } from '../../hooks/useDevices';
 import { useAuth } from '../../context/AuthContext';
 import { RoleGuard } from '../../guards/RoleGuard';
@@ -100,8 +100,11 @@ export function DeviceManagement() {
           {}
           <div className="px-6 py-4 bg-white border-b border-slate-200 flex items-center gap-3">
             <div className="relative flex-1 max-w-sm">
+              <label htmlFor="device-search" className="sr-only">Rechercher un appareil</label>
               <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
+                id="device-search"
+                name="search"
                 type="text"
                 placeholder="Rechercher un appareil..."
                 value={search}
@@ -110,7 +113,10 @@ export function DeviceManagement() {
                 style={{ fontSize: 13 }}
               />
             </div>
+            <label htmlFor="status-filter" className="sr-only">Filtrer par statut</label>
             <select
+              id="status-filter"
+              name="statusFilter"
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
               className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-600"

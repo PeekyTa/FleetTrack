@@ -114,11 +114,14 @@ export function Login() {
               </div>
             )}
             <div>
-              <label className="block text-slate-700 mb-1.5" style={{ fontSize: 14, fontWeight: 500 }}>
+              <label htmlFor="login-email" className="block text-slate-700 mb-1.5" style={{ fontSize: 14, fontWeight: 500 }}>
                 Adresse email
               </label>
               <input
+                id="login-email"
+                name="email"
                 type="email"
+                autoComplete="email"
                 value={email}
                 onChange={(e: any) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
@@ -128,12 +131,15 @@ export function Login() {
             </div>
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-slate-700" style={{ fontSize: 14, fontWeight: 500 }}>Mot de passe</label>
+                <label htmlFor="login-password" className="text-slate-700" style={{ fontSize: 14, fontWeight: 500 }}>Mot de passe</label>
                 <a href="#" className="text-blue-600 hover:text-blue-700" style={{ fontSize: 13 }}>Mot de passe oublié ?</a>
               </div>
               <div className="relative">
                 <input
+                  id="login-password"
+                  name="password"
                   type={showPassword ? 'text' : 'password'}
+                  autoComplete="current-password"
                   value={password}
                   onChange={(e: any) => setPassword(e.target.value)}
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all pr-12"
@@ -150,7 +156,7 @@ export function Login() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <input type="checkbox" id="remember" defaultChecked className="w-4 h-4 accent-blue-600 rounded" />
+              <input type="checkbox" id="remember" name="remember" defaultChecked className="w-4 h-4 accent-blue-600 rounded" />
               <label htmlFor="remember" className="text-slate-600" style={{ fontSize: 14 }}>Rester connecté</label>
             </div>
             <button

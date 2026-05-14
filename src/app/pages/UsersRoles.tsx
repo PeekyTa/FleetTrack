@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Plus, Edit2, Trash2, X, UserPlus, Search, Shield } from 'lucide-react';
+import { useState } from 'react';
+import { Edit2, Trash2, X, UserPlus, Search } from 'lucide-react';
 import { useUsers } from '../../hooks/useUsers';
 import { RoleGuard } from '../../guards/RoleGuard';
 import type { User, UserRole } from '../../types/index';
@@ -24,7 +24,7 @@ export function UsersRoles() {
       u.email.toLowerCase().includes(search.toLowerCase());
     return roleMatch && searchMatch;
   });
-  const handleSave = async (data: { name: string; email: string; password?: string; role?: string }) => {
+  const handleSave = async (data: { name: string; email: string; password?: string; role?: UserRole }) => {
     try {
       if (editUser) {
         await updateUser(editUser.id, data);
@@ -216,13 +216,13 @@ export function UsersRoles() {
 function UserFormModal({ user, onClose, onSave }: {
   user: User | null;
   onClose: () => void;
-  onSave: (data: { name: string; email: string; password?: string; role?: string }) => void;
+  onSave: (data: { name: string; email: string; password?: string; role?: UserRole }) => void;
 }) {
   const [form, setForm] = useState({
     name: user?.name || '',
     email: user?.email || '',
     password: '',
-    role: user?.role || 'VIEWER',
+    role: user?.role || ('VIEWER' as UserRole),
   });
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -251,7 +251,7 @@ function UserFormModal({ user, onClose, onSave }: {
           )}
           <div>
             <label className="block text-slate-600 mb-1.5" style={{ fontSize: 13, fontWeight: 500 }}>Rôle</label>
-            <select value={form.role} onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
+            <select value={form.role} onChange={(e) => setForm((f) => ({ ...f, role: e.target.value as UserRole }))}
               className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700" style={{ fontSize: 14 }}>
               <option value="ADMIN">Administrateur</option>
               <option value="SUPERVISOR">Superviseur</option>

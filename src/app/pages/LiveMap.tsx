@@ -1,10 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Search, Filter, Wifi, WifiOff, BatteryLow, AlertTriangle } from 'lucide-react';
 import { LeafletMap } from '../../components/Map/LeafletMap';
 import { useLocations } from '../../hooks/useLocations';
 import { useGeofences } from '../../hooks/useGeofences';
 import { useAuth } from '../../context/AuthContext';
-import type { DeviceLocation } from '../../types/index';
+
 const STATUS_FILTERS = [
   { value: 'all', label: 'Tous' },
   { value: 'ONLINE', label: 'En ligne' },
@@ -36,7 +36,7 @@ export function LiveMap() {
     lowBattery: deviceLocations.filter((d) => d.status === 'LOW_BATTERY').length,
     warning: deviceLocations.filter((d) => d.status === 'WARNING').length,
   }), [deviceLocations]);
-  const selectedDevice = filtered.find((d) => d.deviceId === selectedDeviceId);
+
   return (
     <div className="flex h-full overflow-hidden relative">
       {}
@@ -65,8 +65,11 @@ export function LiveMap() {
           {}
           <div className="p-3 border-b border-slate-100">
             <div className="relative">
+              <label htmlFor="livemap-device-search" className="sr-only">Rechercher un appareil</label>
               <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
+                id="livemap-device-search"
+                name="search"
                 type="text"
                 placeholder="Rechercher un appareil..."
                 value={searchQuery}

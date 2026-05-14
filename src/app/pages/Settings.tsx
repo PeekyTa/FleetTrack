@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Globe, Shield, Bell, Map, Code, Save, RefreshCw } from 'lucide-react';
 import { RoleGuard } from '../../guards/RoleGuard';
 interface SettingSection {
@@ -121,9 +121,11 @@ export function Settings() {
             <div className="divide-y divide-slate-50">
               {section.fields.map((field) => (
                 <div key={field.key} className="px-6 py-4 flex items-center justify-between">
-                  <label className="text-slate-600 font-medium" style={{ fontSize: 13 }}>{field.label}</label>
+                  <label htmlFor={`setting-${field.key}`} className="text-slate-600 font-medium" style={{ fontSize: 13 }}>{field.label}</label>
                   {field.type === 'text' && (
                     <input
+                      id={`setting-${field.key}`}
+                      name={field.key}
                       type="text" value={field.value}
                       onChange={(e) => handleChange(field.key, e.target.value)}
                       className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:outline-none focus:border-blue-400 text-right"
@@ -132,6 +134,8 @@ export function Settings() {
                   )}
                   {field.type === 'number' && (
                     <input
+                      id={`setting-${field.key}`}
+                      name={field.key}
                       type="number" value={field.value}
                       onChange={(e) => handleChange(field.key, parseInt(e.target.value))}
                       className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:outline-none focus:border-blue-400 text-right"
@@ -140,6 +144,8 @@ export function Settings() {
                   )}
                   {field.type === 'select' && (
                     <select
+                      id={`setting-${field.key}`}
+                      name={field.key}
                       value={field.value}
                       onChange={(e) => handleChange(field.key, e.target.value)}
                       className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-700"
@@ -152,7 +158,10 @@ export function Settings() {
                   )}
                   {field.type === 'toggle' && (
                     <button
+                      id={`setting-${field.key}`}
                       onClick={() => handleChange(field.key, !field.value)}
+                      role="switch"
+                      aria-checked={field.value}
                       className={`w-12 h-6 rounded-full transition-colors relative ${field.value ? 'bg-blue-600' : 'bg-slate-200'}`}
                     >
                       <div className={`w-5 h-5 rounded-full bg-white shadow transition-transform absolute top-0.5 ${field.value ? 'translate-x-6' : 'translate-x-0.5'}`} />
@@ -174,7 +183,10 @@ export function Settings() {
           </div>
           <div className="p-6">
             <div className="flex items-center gap-3">
+              <label htmlFor="api-key" className="sr-only">Clé API</label>
               <input
+                id="api-key"
+                name="api-key"
                 type="text" value="ft_live_7f2a8b3c9d4e5f6a1b2c3d4e5f" readOnly
                 className="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 font-mono" style={{ fontSize: 12 }} />
               <button className="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200" style={{ fontSize: 12 }}>Copier</button>

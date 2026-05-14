@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Clock, MapPin, Gauge, Route, Play, Pause, SkipBack, SkipForward } from 'lucide-react';
 import { HistoryMap } from '../../components/Map/HistoryMap';
 import { useDevices } from '../../hooks/useDevices';
@@ -64,8 +64,10 @@ export function HistoryPlayback() {
         <div className="p-4 border-b border-slate-100">
           <h3 className="text-slate-700 font-semibold mb-3" style={{ fontSize: 14 }}>Lecture d'Historique</h3>
           {}
-          <label className="block text-slate-600 mb-1" style={{ fontSize: 12, fontWeight: 500 }}>Appareil</label>
+          <label htmlFor="device-select" className="block text-slate-600 mb-1" style={{ fontSize: 12, fontWeight: 500 }}>Appareil</label>
           <select
+            id="device-select"
+            name="device"
             value={selectedDeviceId || ''}
             onChange={(e) => handleDeviceChange(parseInt(e.target.value))}
             className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 mb-3"
@@ -79,13 +81,13 @@ export function HistoryPlayback() {
           {/* Date range */}
           <div className="grid grid-cols-2 gap-2 mb-3">
             <div>
-              <label className="block text-slate-500 mb-1" style={{ fontSize: 11 }}>Du</label>
-              <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)}
+              <label htmlFor="date-from" className="block text-slate-500 mb-1" style={{ fontSize: 11 }}>Du</label>
+              <input id="date-from" name="dateFrom" type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)}
                 className="w-full px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-700" style={{ fontSize: 12 }} />
             </div>
             <div>
-              <label className="block text-slate-500 mb-1" style={{ fontSize: 11 }}>Au</label>
-              <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)}
+              <label htmlFor="date-to" className="block text-slate-500 mb-1" style={{ fontSize: 11 }}>Au</label>
+              <input id="date-to" name="dateTo" type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)}
                 className="w-full px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-700" style={{ fontSize: 12 }} />
             </div>
           </div>
@@ -109,7 +111,7 @@ export function HistoryPlayback() {
         <div className="flex-1 overflow-y-auto p-4">
           <div className="text-slate-600 font-medium mb-2" style={{ fontSize: 12 }}>Points de passage ({history.length})</div>
           <div className="space-y-1">
-            {history.slice(0, 30).map((loc, i) => (
+            {history.slice(0, 30).map((loc) => (
               <div key={loc.id} className="flex items-center gap-2 py-1 text-slate-500" style={{ fontSize: 11 }}>
                 <div className="w-4 h-4 rounded-full border-2 border-blue-300 flex items-center justify-center shrink-0">
                   <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
@@ -162,7 +164,10 @@ export function HistoryPlayback() {
             </button>
             {}
             <div className="flex-1 mx-4">
+              <label htmlFor="progress-slider" className="sr-only">Progression de la lecture</label>
               <input
+                id="progress-slider"
+                name="progress"
                 type="range" min={0} max={100} step={0.5}
                 value={Math.min(progress, 100)}
                 onChange={(e) => { setProgress(parseFloat(e.target.value)); setPlaying(false); }}

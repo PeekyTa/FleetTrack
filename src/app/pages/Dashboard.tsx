@@ -1,5 +1,4 @@
-import React from 'react';
-import { Radio, Wifi, WifiOff, BatteryLow, AlertTriangle } from 'lucide-react';
+import { Radio, Wifi, WifiOff, AlertTriangle } from 'lucide-react';
 import { LeafletMap } from '../../components/Map/LeafletMap';
 import { useDevices } from '../../hooks/useDevices';
 import { useLocations } from '../../hooks/useLocations';
@@ -59,7 +58,7 @@ function DeviceListPanel({ deviceLocations }: { deviceLocations: DeviceLocation[
   );
 }
 export function Dashboard() {
-  const { stats, loading: devLoading } = useDevices();
+  const { stats } = useDevices();
   const { deviceLocations, loading: locLoading } = useLocations();
   const { unacknowledgedCount } = useAlerts();
   const statCards = [
